@@ -1,58 +1,89 @@
 # Highr
 
-Single-page marketing site for Highr Real Estate, Inc., a US real-estate company. Plain HTML, CSS and
-JS with the Tailwind Play CDN. No build step, no dependencies to install.
+Marketing site for Highr Real Estate, Inc., a US developer of new-build homes. Plain HTML, CSS and JS
+plus a compiled Tailwind stylesheet. It runs from `index.html` over `file://` or any static server;
+Node is needed only to rebuild the Tailwind CSS.
 
 ## Run
-
-Serve the folder with any static server (the page also opens straight from `index.html`):
 
 ```bash
 python3 -m http.server 8000
 ```
 
-## Page sections
+## Pages
 
-Header (black, hides on scroll down) · Hero · Featured projects (filter tabs) · Reviews quote ·
-About and stats · Testimonials carousel · Core team · Call to action · Marquee · Instagram gallery
-(pinned, the footer slides over it) · Footer with contact form.
+| File | What it is |
+|---|---|
+| `index.html` | Home: hero, trust bar, communities (filter tabs), reviews, about and stats, testimonials, team, how it works, FAQ, call to action, gallery, footer with contact form |
+| `skyline-haven.html`, `the-atria-tower.html`, `coastline-residences.html`, `verdant-grove.html` | One page per community: facts, overview, home types and pricing, construction progress, location map, other communities |
+| `privacy.html`, `terms.html` | Privacy Policy and Terms of Use (templates, see Notes) |
+| `sitemap.xml`, `robots.txt` | Search-engine files |
+
+The community and legal pages are **generated**. Do not edit them by hand.
 
 ## Structure
 
 ```
-index.html          page markup (semantic HTML) and Tailwind theme tokens
-css/styles.css      custom styles on top of Tailwind (fonts, buttons, sections, motion)
-js/
-  reveal.js         scroll reveal (data-reveal, data-stagger, data-split)
-  nav.js            header: mobile menu, hide on scroll, active link
-  parallax.js       image parallax (data-parallax) and gallery drift (data-drift)
-  tabs.js           project filter tabs
-  counters.js       count-up stats
-  slider.js         testimonials carousel
-  form.js           contact form validation
-assets/
-  images/           photos (projects, team, social, hero, about) and og-image.jpg
-  logos/            Highr logo, dark and white (SVG)
-  icons/            favicon and UI icons (SVG, used as CSS masks via .icon-*)
-  fonts/            self-hosted Poppins (woff2)
+index.html          home page markup; source of the header, footer and action bar
+css/
+  styles.css        custom styles (fonts, buttons, sections, motion)
+  tailwind.src.css  Tailwind entry and theme tokens (colors, type scale)
+  tailwind.css      compiled output, committed
+js/                 reveal, nav, parallax, tabs, counters, slider, form, actionbar
+tools/
+  build-pages.py    generator (standard-library Python)
+  projects.py       data for the four communities
+  legal.py          text of the Privacy Policy and Terms
+assets/             images, logos, icons (SVG, used as CSS masks via .icon-*), fonts (Poppins woff2)
 ```
 
-## Editing content
+## Editing
 
-- **Text, cities, stats, team and testimonials** are plain markup in `index.html`. Stats count up
-  from `data-count`, `data-prefix`, `data-suffix` and `data-decimals`.
-- **Colors and type sizes** are tokens in the `@theme` block inside `index.html`.
+- **Communities** (name, price, beds, size, status, progress, home types, milestones, nearby places,
+  coordinates): edit `tools/projects.py`, then run `python3 tools/build-pages.py`. This rewrites the
+  community cards on the home page (between the `projects:start/end` markers) and the four pages.
+- **Header, footer, action bar:** edit them in `index.html`, then run the generator so the other pages
+  pick up the change.
+- **Legal text:** `tools/legal.py`, then run the generator.
+- **Domain:** set `SITE_URL` in `tools/build-pages.py` and run it. It writes canonical URLs, Open Graph
+  URLs, JSON-LD and `sitemap.xml`. Also change the Open Graph image URL in `index.html`.
+- **Styles:** Tailwind utility classes live in the markup, theme tokens in `css/tailwind.src.css`.
+  After adding classes run:
+
+  ```bash
+  npm install      # first time only
+  npm run build:css
+  ```
+
+  Run the generator first if you changed a generated page, so the build sees its classes.
+- **Stats** count up from `data-count`, `data-prefix`, `data-suffix` and `data-decimals`.
 - **Icons:** add an SVG to `assets/icons/` and a matching `.icon-*` rule in `css/styles.css`.
+- **Structured data:** Organization and FAQPage (built from the FAQ markup) on the home page,
+  ApartmentComplex or GatedResidenceCommunity plus BreadcrumbList on each community page.
+
+## Replace before launch
+
+All of this is made up for the template:
+
+- Address, phone `(212) 555-0142`, `contact@highr.example`, social links, office hours.
+- Licence numbers in the footer (California DRE #01234567, CSLB #1234567) and the trust-bar claims
+  (10-year structural warranty, fixed-price contracts).
+- Every number in `tools/projects.py`: prices, sizes, availability, progress, dates, nearby travel times,
+  coordinates and unit counts. Stats, reviews and testimonials on the home page.
+- Photos: each community has one image, so there is no gallery or floor-plan drawings; the pages offer
+  "Request floor plans" instead. Add real photos and plans when you have them.
+- `https://www.highr.example` in the SEO output.
+- **Contact form:** it validates and shows a success message but sends nothing until you set
+  `data-endpoint="https://…"` on the `<form data-contact-form>`; it then POSTs the fields as JSON.
+  The form on a community page preselects that community (`data-interest`), and `?interest=Name` works
+  on any page.
+- **Privacy and Terms** are generic US templates, not legal advice. Have a lawyer review them against
+  what you actually collect (and add a cookie notice if you add analytics).
 
 ## Notes
 
-- **Placeholders:** the San Francisco address, the `(212) 555-0142` phone number,
-  `contact@highr.example` and the social links in the footer are made up. Replace them before launch.
-- **Contact form:** it validates and shows a success message, but sends nothing until you set
-  `data-endpoint="https://…"` on the `<form data-contact-form>`; it then POSTs the fields as JSON.
-- **Testimonials** loop infinitely and autoplay every 5 s (`data-autoplay` on the slider; remove it to
-  turn off). They pause on hover, focus, drag and when off screen.
+- **Map:** an OpenStreetMap embed (loads from openstreetmap.org when the page is online).
+- **Testimonials** loop and autoplay every 5 s (`data-autoplay` on the slider; remove it to turn off).
+  They pause on hover, focus, drag and when off screen.
 - **Motion** respects `prefers-reduced-motion`; content stays visible without JavaScript.
-- **Tailwind Play CDN** compiles in the browser and is meant for development. For production, swap it
-  for the Tailwind CLI build (the `@theme` block in `index.html` moves into your CSS).
-- **Not included:** Privacy Policy and Terms of Service pages.
+- **Mobile:** a bottom bar with Call, WhatsApp and Book a tour appears after the hero.

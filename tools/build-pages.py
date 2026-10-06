@@ -145,7 +145,7 @@ def layout_parts(src):
     header = grab(src, '<header id="site-header"', "</header>")
     footer = grab(src, '<footer id="contact"', "</footer>")
     actionbar = grab(src, '<nav class="actionbar"', "</nav>")
-    tailwind = grab(src, "<!-- Tailwind v4 Play CDN -->", "</style>")
+    tailwind = grab(src, "<!-- Compiled Tailwind", 'tailwind.css">')
     # Subpage links: sections of the home page get an index.html prefix; #contact stays local.
     header = header.replace('href="#top"', 'href="index.html"').replace('aria-label="Highr, back to top"', 'aria-label="Highr, home"')
     header = re.sub(r'href="#(projects|about|process|testimonial|faq|visit)"', r'href="index.html#\1"', header)
