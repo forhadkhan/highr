@@ -7,9 +7,10 @@ Data lives in tools/projects.py. The header, footer, action bar and Tailwind the
 generated page are copied from index.html, so edit them there and run this script again.
 Standard library only; the site itself needs no build step.
 """
+import json
 import re
 import sys
-from html import escape
+from html import escape, unescape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -20,6 +21,73 @@ import legal  # noqa: E402
 INDEX = ROOT / "index.html"
 SITE_NAME = "Highr"
 PHONE_TEL = "+12125550142"
+SITE_URL = "https://www.highr.example"  # replace with the real domain, then re-run this script
+ORG = {
+    "@type": "Organization",
+    "@id": SITE_URL + "/#organization",
+    "name": "Highr Real Estate, Inc.",
+    "url": SITE_URL + "/",
+    "logo": SITE_URL + "/assets/logos/logo-dark.svg",
+    "telephone": "+1-212-555-0142",
+    "email": "contact@highr.example",
+    "address": {"@type": "PostalAddress", "streetAddress": "500 Market Street, Suite 1200",
+                "addressLocality": "San Francisco", "addressRegion": "CA", "postalCode": "94105", "addressCountry": "US"},
+}
+
+
+def ld(data):
+    """A JSON-LD script tag ('</' is escaped so the data can never close the tag)."""
+    body = json.dumps({"@context": "https://schema.org", **data} if isinstance(data, dict) else data,
+                      indent=2, ensure_ascii=False).replace("</", "<\\/")
+    return f'<script type="application/ld+json">\n{body}\n  </script>'
+
+
+def faq_entities(src):
+    out = []
+    for q, a in re.findall(r'<summary class="faq__q"><span>(.*?)</span>.*?</summary>\s*<p class="faq__a">(.*?)</p>', src, flags=re.S):
+        out.append({"@type": "Question", "name": unescape(q),
+                    "acceptedAnswer": {"@type": "Answer", "text": unescape(re.sub(r"<[^>]+>", "", a))}})
+    return out
+
+
+def seo_index(src):
+    return "\n  ".join([
+        f'<link rel="canonical" href="{SITE_URL}/">',
+        f'<meta property="og:url" content="{SITE_URL}/">',
+        ld({**ORG}),
+        ld({"@type": "FAQPage", "mainEntity": faq_entities(src)}),
+    ])
+
+
+def seo_project(p):
+    kind = "GatedResidenceCommunity" if "Villas" in p["type"] else "ApartmentComplex"
+    locality, region = [x.strip() for x in p["city"].split(",")]
+    data = {"@type": kind, "name": p["name"], "url": f'{SITE_URL}/{p["slug"]}.html',
+            "description": p["tagline"], "image": f'{SITE_URL}/assets/images/projects/{p["image"]}',
+            "address": {"@type": "PostalAddress", "addressLocality": locality, "addressRegion": region, "addressCountry": "US"},
+            "geo": {"@type": "GeoCoordinates", "latitude": p["coords"][0], "longitude": p["coords"][1]},
+            "numberOfAccommodationUnits": int(re.sub(r"\D", "", p["homes"].split()[0])),
+            "provider": {"@id": ORG["@id"]}}
+    crumbs = {"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Communities", "item": SITE_URL + "/#projects"},
+        {"@type": "ListItem", "position": 2, "name": p["name"], "item": data["url"]}]}
+    return "\n  ".join([f'<link rel="canonical" href="{data["url"]}">', f'<meta property="og:url" content="{data["url"]}">',
+                        ld(data), ld(crumbs)])
+
+
+def seo_legal(page):
+    url = f'{SITE_URL}/{page["slug"]}.html'
+    return "\n  ".join([f'<link rel="canonical" href="{url}">', f'<meta property="og:url" content="{url}">'])
+
+
+def sitemap():
+    pages = ["index.html"] + [f'{p["slug"]}.html' for p in PROJECTS] + [f'{x["slug"]}.html' for x in legal.PAGES]
+    urls = "".join(f"  <url><loc>{SITE_URL}/{'' if u == 'index.html' else u}</loc></url>\n" for u in pages)
+    return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n'
+
+
+def robots():
+    return f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n"
 
 
 def card(p, i):
@@ -55,6 +123,10 @@ def card(p, i):
 
 
 def patch_index(src):
+    seo = seo_index(src)
+    src, n = re.subn(r"(<!-- seo:start[^>]*-->\n).*?(\s*<!-- seo:end -->)", lambda m: m.group(1) + "  " + seo + "\n  " + m.group(2).lstrip(), src, flags=re.S)
+    if n != 1:
+        raise SystemExit("index.html: seo:start / seo:end markers not found")
     cards = "".join(card(p, i) for i, p in enumerate(PROJECTS))
     new, n = re.subn(r"(<!-- projects:start[^>]*-->\n).*?(\s*<!-- projects:end -->)",
                      lambda m: m.group(1) + cards + m.group(2), src, flags=re.S)
@@ -172,8 +244,9 @@ def project_page(p, parts, others):
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="{escape(title)}">
   <meta property="og:description" content="{escape(p["tagline"])}">
-  <meta property="og:image" content="assets/images/og-image.jpg">
+  <meta property="og:image" content="{SITE_URL}/assets/images/og-image.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  {seo_project(p)}
 
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
@@ -345,6 +418,7 @@ def legal_page(page, parts):
   <title>{escape(title)}</title>
   <meta name="description" content="{escape(page["description"])}">
   <meta name="theme-color" content="#ffffff">
+  {seo_legal(page)}
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -399,6 +473,8 @@ def main():
     for p in PROJECTS:
         others = [o for o in PROJECTS if o is not p][:3]
         (ROOT / f'{p["slug"]}.html').write_text(project_page(p, parts, others), encoding="utf-8")
+    (ROOT / "sitemap.xml").write_text(sitemap(), encoding="utf-8")
+    (ROOT / "robots.txt").write_text(robots(), encoding="utf-8")
     for page in legal.PAGES:
         (ROOT / f'{page["slug"]}.html').write_text(legal_page(page, parts), encoding="utf-8")
     print(f"index.html cards + {len(PROJECTS)} community pages + {len(legal.PAGES)} legal pages written")

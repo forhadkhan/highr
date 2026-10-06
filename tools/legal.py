@@ -3,7 +3,7 @@
 UPDATED = "October 1, 2026"
 COMPANY = "Highr Real Estate, Inc."
 EMAIL = "contact@highr.example"
-ADDRESS = "100 Market Street, San Francisco, CA 94105"
+ADDRESS = "500 Market Street, Suite 1200, San Francisco, CA 94105"
 
 # Each page: slug, title, description, intro, sections [(heading, [paragraph | ("ul", [items])])]
 PAGES = [
