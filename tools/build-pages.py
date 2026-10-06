@@ -287,7 +287,7 @@ def project_page(p, parts, others):
         bed_txt = "Studio" if str(b) == "0" else f"{b} bed"
         plan_items += f'''          <li data-reveal data-reveal-delay="{(n - 1) % 2 * 100}">
             <figure class="plan">
-              <div class="plan__img"><img src="{src}" alt="{kind} of the {escape(t)}: {bed_txt}, {ba} bath, {sq} sq ft" width="400" height="300" loading="lazy"></div>
+              <div class="plan__img"><a href="{src}" class="zoom" data-lightbox="plans" data-caption="{escape(t)} · {bed_txt} · {ba} bath · {sq} sq ft"><img src="{src}" alt="{kind} of the {escape(t)}: {bed_txt}, {ba} bath, {sq} sq ft" width="400" height="300" loading="lazy"><span class="zoom__hint">{icon("zoom-in")}</span><span class="sr-only">View larger</span></a></div>
               <figcaption><span class="text-h4">{t}</span><span class="text-ink-700">{bed_txt} · {ba} bath · {sq} sq ft</span></figcaption>
             </figure>
           </li>
@@ -313,7 +313,7 @@ def project_page(p, parts, others):
     gallery_html = ""
     if len(gallery) >= 2:
         shots = "".join(
-            f'''          <li class="gallery-grid__item" data-reveal data-reveal-delay="{i % 3 * 80}"><img src="assets/images/projects/{g}" alt="{escape(alt)}" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover"></li>
+            f'''          <li class="gallery-grid__item" data-reveal data-reveal-delay="{i % 3 * 80}"><a href="assets/images/projects/{g}" class="zoom" data-lightbox="gallery" data-caption="{escape(alt)}"><img src="assets/images/projects/{g}" alt="{escape(alt)}" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover"><span class="zoom__hint">{icon("zoom-in")}</span><span class="sr-only">View larger</span></a></li>
 ''' for i, (g, alt) in enumerate(gallery))
         gallery_html = f'''    <section id="gallery" class="bg-white pb-[var(--section-y)]" aria-labelledby="gallery-title">
       <div class="container-page">
@@ -499,6 +499,7 @@ def project_page(p, parts, others):
   <script src="js/counters.js" defer></script>
   <script src="js/form.js" defer></script>
   <script src="js/actionbar.js" defer></script>
+  <script src="js/lightbox.js" defer></script>
 </body>
 </html>
 '''

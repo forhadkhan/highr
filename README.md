@@ -29,7 +29,7 @@ css/
   styles.css        custom styles (fonts, buttons, sections, motion)
   tailwind.src.css  Tailwind entry and theme tokens (colors, type scale)
   tailwind.css      compiled output, committed
-js/                 reveal, nav, parallax, tabs, counters, slider, form, actionbar
+js/                 reveal, nav, parallax, tabs, counters, slider, form, actionbar, lightbox
 tools/
   build-pages.py    generator (standard-library Python)
   projects.py       data for the four communities
@@ -62,6 +62,9 @@ assets/             images, logos, icons (SVG, used as CSS masks via .icon-*), f
   overwrites the ones it made. `n` is the row number in `types` (1 = first). A community page shows a Gallery
   section when its entry in `tools/projects.py` has `"gallery": [("file.webp", "alt text"), ...]` with at least
   two images placed in `assets/images/projects/`.
+- **Lightbox:** `js/lightbox.js` opens any `<a href="full.jpg" data-lightbox="group" data-caption="…">` in a modal
+  viewer (floor plans and gallery use it). Links sharing a group name get previous/next; the overlay is a solid
+  dimmed black with no blur. Without JavaScript the link opens the image.
 - **Stats** count up from `data-count`, `data-prefix`, `data-suffix` and `data-decimals`.
 - **Icons:** add an SVG to `assets/icons/` and a matching `.icon-*` rule in `css/styles.css`.
 - **Structured data:** Organization and FAQPage (built from the FAQ markup) on the home page,
