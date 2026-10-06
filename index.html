@@ -62,15 +62,78 @@
   <script>document.documentElement.classList.add('js');</script>
   <a href="#main" class="skip-link">Skip to content</a>
 
-  <!-- @header -->
+  <header id="site-header" class="site-header">
+    <div class="container-page">
+      <div class="flex h-[var(--header-h)] items-center justify-between gap-4">
+        <a href="#top" class="shrink-0" aria-label="Highr, back to top">
+          <img src="assets/logos/logo-dark.svg" alt="Highr" width="109" height="33" class="h-auto w-[96px] sm:w-[110px]">
+        </a>
+
+        <nav id="site-nav" class="nav-panel" aria-label="Primary">
+          <ul class="flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-6">
+            <li><a href="#about" class="nav-link" data-nav-link>About Us</a></li>
+            <li><a href="#reviews" class="nav-link" data-nav-link>Reviews</a></li>
+            <li><a href="#projects" class="nav-link" data-nav-link>Projects</a></li>
+            <li><a href="#testimonial" class="nav-link" data-nav-link>Testimonial</a></li>
+          </ul>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <a href="#contact" class="btn !px-5 !py-3.5 sm:!px-7 sm:!py-4">
+            <span class="btn__label"><span>Contact</span><span aria-hidden="true">Contact</span></span>
+          </a>
+          <button type="button" class="menu-toggle lg:hidden" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu" data-menu-toggle>
+            <span class="menu-toggle__bar"></span>
+            <span class="menu-toggle__bar"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <main id="main">
+    <!-- Hero -->
+    <section id="top" class="hero bg-white" aria-labelledby="hero-title">
+      <div class="container-page">
+        <div class="mx-auto flex flex-col items-center gap-8 text-center">
+          <div class="flex items-center gap-2 text-sm leading-none" data-reveal="fade">
+            <span>Excellent</span>
+            <span class="stars" style="--star: 15px" role="img" aria-label="5 out of 5 stars">
+              <i class="icon icon-star"></i><i class="icon icon-star"></i><i class="icon icon-star"></i><i class="icon icon-star"></i><i class="icon icon-star"></i>
+            </span>
+            <span>4.8/5</span>
+          </div>
+
+          <h1 id="hero-title" class="max-w-[700px] text-h1" data-reveal data-split data-reveal-delay="100">
+            A destination for distinctive homes
+          </h1>
+
+          <p class="max-w-[470px]" data-reveal data-reveal-delay="450">
+            Discover properties that match your lifestyle, from cozy apartments to luxury villas, all in one place.
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center gap-x-7 gap-y-5" data-reveal data-reveal-delay="600">
+            <a href="#projects" class="btn">
+              <span class="btn__label"><span>Explore listings</span><span aria-hidden="true">Explore listings</span></span>
+            </a>
+            <a href="#contact" class="link-quiet">Get consultation</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="hero-media" aria-hidden="false">
+      <img src="assets/images/hero-background.webp" alt="Two modern glass residential towers rising above green treetops at dusk" width="1500" height="586" fetchpriority="high" class="hero-media__img" data-parallax="0.12">
+    </div>
+
     <!-- @main -->
   </main>
 
   <!-- @footer -->
 
   <script src="js/reveal.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/parallax.js" defer></script>
   <!-- @scripts -->
 </body>
 </html>
