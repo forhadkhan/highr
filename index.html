@@ -455,13 +455,105 @@
     <!-- @main -->
   </main>
 
-  <!-- @footer -->
+  <!-- Instagram gallery: sits outside <main> so the footer can slide over it while it stays pinned -->
+  <section class="social" aria-label="Instagram gallery">
+    <div class="social__wrap">
+        <div class="social__col" data-drift="-24">
+          <img src="assets/images/social/social-media-image1.webp" alt="Highr Instagram post 1" width="1500" height="1500" loading="lazy">
+          <img src="assets/images/social/social-media-image4.webp" alt="Highr Instagram post 4" width="1500" height="1500" loading="lazy">
+        </div>
+        <div class="social__col" data-drift="24">
+          <img src="assets/images/social/social-media-image2.webp" alt="Highr Instagram post 2" width="1500" height="1500" loading="lazy">
+          <img src="assets/images/social/social-media-image5.webp" alt="Highr Instagram post 5" width="1500" height="1500" loading="lazy">
+        </div>
+        <div class="social__col" data-drift="-24">
+          <img src="assets/images/social/social-media-image3.webp" alt="Highr Instagram post 3" width="1500" height="1500" loading="lazy">
+          <img src="assets/images/social/social-media-image6.webp" alt="Highr Instagram post 6" width="1500" height="1500" loading="lazy">
+        </div>
+    </div>
+    <div class="social__cta">
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="btn btn--light">
+        <i class="icon icon-instagram" aria-hidden="true"></i>
+        <span class="btn__label"><span>Follow us on Instagram</span><span aria-hidden="true">Follow us on Instagram</span></span>
+      </a>
+    </div>
+  </section>
+
+  <footer id="contact" class="site-footer" aria-labelledby="contact-title">
+    <div class="container-page">
+      <div class="grid grid-cols-1 gap-[60px] md:gap-[100px] lg:grid-cols-2 lg:gap-0">
+        <div class="flex flex-col gap-10 lg:border-r lg:border-white/20 lg:pr-10">
+          <h2 id="contact-title" class="max-w-[460px] text-h2 text-white" data-reveal data-split>We’d love to hear from you.</h2>
+          <p class="max-w-[420px] text-white" data-reveal data-reveal-delay="100">Whether you’re exploring investment opportunities or searching for your next dream home,<br><br>our team is here to help you every step of the way.</p>
+
+          <form class="contact-form flex flex-col gap-10" data-contact-form novalidate data-reveal data-reveal-delay="150">
+            
+            <div>
+              <label for="f-name" class="sr-only">Full name*</label>
+              <input id="f-name" name="name" type="text" maxlength="256" placeholder="Full name*" class="field" autocomplete="name" required>
+            </div>
+            <div>
+              <label for="f-email" class="sr-only">Email address*</label>
+              <input id="f-email" name="email" type="email" maxlength="256" placeholder="Email address*" class="field" autocomplete="email" required>
+            </div>
+            <div>
+              <label for="f-phone" class="sr-only">Phone number*</label>
+              <input id="f-phone" name="phone" type="tel" maxlength="256" placeholder="Phone number*" class="field" autocomplete="tel" required>
+            </div>
+            <div>
+              <label for="f-company" class="sr-only">Company / organization</label>
+              <input id="f-company" name="company" type="text" maxlength="256" placeholder="Company / organization" class="field" autocomplete="organization">
+            </div>
+            <div>
+              <label for="f-message" class="sr-only">Message</label>
+              <textarea id="f-message" name="message" maxlength="5000" rows="3" placeholder="Write your message or specific request here..." class="field field--area"></textarea>
+            </div>
+            <label class="check -mt-4">
+              <input type="checkbox" name="consent" required>
+              <span class="check__box" aria-hidden="true"></span>
+              <span class="text-white">I agree to the terms &amp; privacy policy</span>
+            </label>
+            <div class="flex flex-col items-start gap-4">
+              <button type="submit" class="btn btn--light">
+                <span class="btn__label"><span>Send Inquiry</span><span aria-hidden="true">Send Inquiry</span></span>
+              </button>
+              <p class="form-msg form-msg--ok" role="status" hidden>Thank you! Your submission has been received.</p>
+              <p class="form-msg form-msg--err" role="alert" hidden>Oops! Something went wrong while submitting the form. Please try again.</p>
+            </div>
+          </form>
+        </div>
+
+        <div class="flex flex-col justify-between gap-[100px] lg:gap-10 lg:pl-10">
+          <div class="flex flex-col items-start gap-8" data-stagger="100">
+            <a href="#top" aria-label="Highr, back to top" data-reveal><img src="assets/logos/logo-white.svg" alt="Highr" width="109" height="40" class="footer-logo"></a>
+            <h2 class="text-h3 text-white" data-reveal>Corporate office</h2>
+            <p class="max-w-[328px] text-white" data-reveal><span class="text-white/70">Highr Real Estate Group </span>Aurora Business Tower, 8th Floor Downtown, Dubai</p>
+            <ul class="flex flex-col gap-6 text-white" data-reveal>
+              <li><a href="tel:+97145822290" class="flex items-center gap-3"><i class="icon icon-phone size-7" aria-hidden="true"></i>+971 458 222 90</a></li>
+              <li><a href="mailto:contact@highr.example" class="flex items-center gap-3"><i class="icon icon-mail size-7" aria-hidden="true"></i>contact@highr.example</a></li>
+            </ul>
+            <ul class="flex items-center gap-2" data-reveal>
+              <li><a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Highr on X"><i class="icon icon-x" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Highr on Instagram"><i class="icon icon-instagram" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Highr on Facebook"><i class="icon icon-facebook" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-white/20 pt-8 text-sm text-white/70">
+        <p>© <span data-year>2026</span> Highr. All rights reserved.</p>
+        <a href="#top" class="flex items-center gap-2 transition-colors hover:text-white">Back to top <i class="icon icon-chevron-up size-5" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </footer>
 
   <script src="js/reveal.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/parallax.js" defer></script>
   <script src="js/tabs.js" defer></script>
   <script src="js/counters.js" defer></script>
+  <script src="js/form.js" defer></script>
   <script src="js/slider.js" defer></script>
   <!-- @scripts -->
 </body>
