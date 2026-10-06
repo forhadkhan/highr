@@ -1,5 +1,5 @@
 /**
- * Count-up numbers: <p data-count="15" data-prefix="" data-suffix="k+" data-decimals="0">15k+</p>
+ * Count-up numbers: <p data-count="2400" data-prefix="" data-suffix="+" data-decimals="0">2,400+</p>
  * The final value is already in the markup, so it reads correctly without JS or with reduced motion.
  */
 (function () {
@@ -14,7 +14,7 @@
 
   function format(el, value) {
     var decimals = parseInt(el.getAttribute('data-decimals'), 10) || 0;
-    return (el.getAttribute('data-prefix') || '') + value.toFixed(decimals) + (el.getAttribute('data-suffix') || '');
+    return (el.getAttribute('data-prefix') || '') + value.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + (el.getAttribute('data-suffix') || '');
   }
 
   function run(el) {
