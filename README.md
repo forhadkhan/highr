@@ -42,6 +42,7 @@ tools/
   build-pages.py    generator (standard-library Python)
   projects.py       data for the four communities
   legal.py          text of the Privacy Policy and Terms
+  optimize-images.py  responsive photo copies and placeholders (needs Pillow)
 assets/             images, logos, icons (SVG, used as CSS masks via .icon-*), fonts (Poppins woff2)
 ```
 
@@ -70,6 +71,10 @@ assets/             images, logos, icons (SVG, used as CSS masks via .icon-*), f
   overwrites the ones it made. `n` is the row number in `types` (1 = first). A community page shows a Gallery
   section when its entry in `tools/projects.py` has `"gallery": [("file.webp", "alt text"), ...]` with at least
   two images placed in `assets/images/projects/`.
+- **Community photos:** put the full-size original (about 1500 px wide, `.webp`) in `assets/images/projects/`, then run
+  `pip install pillow` once and `python3 tools/optimize-images.py`. It makes 480, 800 and 1200 px copies and a tiny
+  placeholder per photo; `build-pages.py` adds the `srcset` so phones download 20 to 60 KB instead of 150 to 300 KB,
+  and the placeholder shows while the photo loads. Commit the copies and `placeholders.json`.
 - **Lightbox:** `js/lightbox.js` opens any `<a href="full.jpg" data-lightbox="group" data-caption="…">` in a modal
   viewer (floor plans and gallery use it). Links sharing a group name get previous/next; the overlay is a solid
   dimmed black with no blur. Without JavaScript the link opens the image.

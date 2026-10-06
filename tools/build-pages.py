@@ -97,6 +97,32 @@ def beds_label(beds):
     return beds.replace("0–", "Studio–", 1) if beds.startswith("0–") else beds
 
 
+PROJECT_IMG = Path(__file__).resolve().parent.parent / "assets" / "images" / "projects"
+SIZES_CARD = "(min-width: 1280px) 640px, (min-width: 768px) 46vw, 70vw"
+
+
+def photo_attrs(image, sizes):
+    """srcset/sizes for a community photo, from the copies made by tools/optimize-images.py."""
+    stem = image.rsplit(".", 1)[0]
+    found = [(w, f"assets/images/projects/{stem}-{w}.webp") for w in (480, 800, 1200)
+             if (PROJECT_IMG / f"{stem}-{w}.webp").exists()]
+    if not found:
+        return ""
+    found.append((1500, f"assets/images/projects/{image}"))
+    srcset = ", ".join(f"{u} {w}w" for w, u in found)
+    return f' srcset="{srcset}" sizes="{sizes}"'
+
+
+def placeholder_style(image):
+    """Inline style that paints a tiny placeholder behind a photo until it loads."""
+    try:
+        data = json.loads((PROJECT_IMG / "placeholders.json").read_text())
+    except (OSError, ValueError):
+        return ""
+    uri = data.get(image)
+    return f' style="background-image: url({uri})"' if uri else ""
+
+
 def card(p, i):
     ongoing = p["status"] == "ongoing"
     if ongoing:
@@ -108,8 +134,8 @@ def card(p, i):
     delay = 0 if i % 2 == 0 else 120
     return f'''            <li class="project-item" data-status="{p["status"]}" data-reveal data-reveal-delay="{delay}">
               <article class="flex h-full flex-col gap-6">
-                <div class="project-media" data-reveal="clip">
-                  <img src="assets/images/projects/{p["image"]}" alt="{escape(p["alt"])}" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover">
+                <div class="project-media" data-reveal="clip"{placeholder_style(p["image"])}>
+                  <img src="assets/images/projects/{p["image"]}"{photo_attrs(p["image"], SIZES_CARD)} alt="{escape(p["alt"])}" width="1500" height="1002" loading="lazy" decoding="async" class="h-full w-full object-cover">
                   <p class="status-badge">{status}</p>
                 </div>
                 <div class="flex flex-col gap-3">
@@ -272,7 +298,7 @@ def project_page(p, parts, others):
     other_cards = "".join(
         f'''          <li data-reveal data-reveal-delay="{i * 100}">
             <a href="{o["slug"]}" class="other-card">
-              <div class="project-media"><img src="assets/images/projects/{o["image"]}" alt="{escape(o["alt"])}" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover"></div>
+              <div class="project-media"{placeholder_style(o["image"])}><img src="assets/images/projects/{o["image"]}"{photo_attrs(o["image"], SIZES_CARD)} alt="{escape(o["alt"])}" width="1500" height="1002" loading="lazy" decoding="async" class="h-full w-full object-cover"></div>
               <span class="mt-5 flex flex-col gap-1.5">
                 <span class="text-h4">{o["name"]}</span>
                 <span class="text-ink-700">{o["city"]} · From {o["price"]}</span>
@@ -399,7 +425,7 @@ def project_page(p, parts, others):
     </section>
 
     <div class="hero-media">
-      <img src="assets/images/projects/{p["image"]}" alt="{escape(p["alt"])}" width="1500" height="1002" fetchpriority="high" class="hero-media__img" data-parallax="0.12">
+      <img src="assets/images/projects/{p["image"]}"{photo_attrs(p["image"], "100vw")} alt="{escape(p["alt"])}" width="1500" height="1002" fetchpriority="high" class="hero-media__img" data-parallax="0.12">
     </div>
 
     <section class="section-y bg-white" aria-label="Key facts">
