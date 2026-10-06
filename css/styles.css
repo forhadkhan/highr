@@ -194,6 +194,7 @@
   .icon-check-circle { --icon: url('../assets/icons/check-circle.svg'); }
   .icon-chevron-left { --icon: url('../assets/icons/chevron-left.svg'); }
   .icon-chevron-right { --icon: url('../assets/icons/chevron-right.svg'); }
+  .icon-chevron-down { --icon: url('../assets/icons/chevron-down.svg'); }
   .icon-chevron-up { --icon: url('../assets/icons/chevron-up.svg'); }
   .icon-asterisk { --icon: url('../assets/icons/asterisk.svg'); }
   .icon-x { --icon: url('../assets/icons/x.svg'); }
@@ -704,6 +705,26 @@
   .form-msg[hidden] { display: none; }
   .form-msg--ok { background: var(--color-smoke); color: var(--color-ink); }
   .form-msg--err { background: #ffe5e5; color: #8a1c1c; }
+
+  /* ---------- FAQ ---------- */
+  .faq { border-top: 1px solid var(--color-ink-100); }
+  .faq__item { border-bottom: 1px solid var(--color-ink-100); }
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 24px;
+    font-size: var(--text-body-lg);
+    line-height: 1.3;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__q .icon { flex: none; width: 28px; height: 28px; transition: transform 0.3s var(--ease-out, ease); }
+  .faq__item[open] .faq__q .icon { transform: rotate(180deg); }
+  .faq__q:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 4px; }
+  .faq__a { max-width: 640px; padding-bottom: 28px; color: var(--color-ink-700); }
 
   /* ---------- Reduced motion: show everything, no movement ---------- */
   @media (prefers-reduced-motion: reduce) {
