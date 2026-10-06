@@ -85,8 +85,9 @@
         </nav>
 
         <div class="flex items-center gap-2">
+          <a href="tel:+12125550142" class="header-phone"><i class="icon icon-phone" aria-hidden="true"></i>(212) 555-0142</a>
           <a href="#contact" class="btn btn--light !px-5 !py-3.5 sm:!px-7 sm:!py-4">
-            <span class="btn__label"><span>Contact</span><span aria-hidden="true">Contact</span></span>
+            <span class="btn__label"><span>Book a tour</span><span aria-hidden="true">Book a tour</span></span>
           </a>
           <button type="button" class="menu-toggle lg:hidden" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu" data-menu-toggle>
             <span class="menu-toggle__bar"></span>
@@ -120,10 +121,10 @@
           </p>
 
           <div class="flex flex-wrap items-center justify-center gap-x-7 gap-y-5" data-reveal data-reveal-delay="600">
-            <a href="#projects" class="btn">
-              <span class="btn__label"><span>View our homes</span><span aria-hidden="true">View our homes</span></span>
+            <a href="#contact" class="btn">
+              <span class="btn__label"><span>Book a tour</span><span aria-hidden="true">Book a tour</span></span>
             </a>
-            <a href="#visit" class="link-quiet">Book a tour</a>
+            <a href="#projects" class="link-quiet">View our homes</a>
           </div>
         </div>
       </div>
@@ -590,9 +591,18 @@
               <label for="f-phone" class="sr-only">Phone number*</label>
               <input id="f-phone" name="phone" type="tel" maxlength="256" placeholder="Phone number*" class="field" autocomplete="tel" required>
             </div>
-            <div>
-              <label for="f-company" class="sr-only">Company / organization</label>
-              <input id="f-company" name="company" type="text" maxlength="256" placeholder="Company / organization" class="field" autocomplete="organization">
+            <div class="field-select">
+              <label for="f-interest" class="sr-only">I’m interested in</label>
+              <select id="f-interest" name="interest" class="field">
+                <option value="">I’m interested in…</option>
+                <option>Skyline Haven, Austin</option>
+                <option>The Atria Tower, Chicago</option>
+                <option>Coastline Residences, Charleston</option>
+                <option>Verdant Grove, Portland</option>
+                <option>Investing in a Highr community</option>
+                <option>Not sure yet</option>
+              </select>
+              <i class="icon icon-chevron-down" aria-hidden="true"></i>
             </div>
             <div>
               <label for="f-message" class="sr-only">Message</label>
@@ -620,8 +630,10 @@
             <p class="max-w-[328px] text-white" data-reveal><span class="text-white/70">Highr Real Estate, Inc. </span>500 Market Street, Suite 1200 San Francisco, CA 94105</p>
             <ul class="flex flex-col gap-6 text-white" data-reveal>
               <li><a href="tel:+12125550142" class="flex items-center gap-3"><i class="icon icon-phone size-7" aria-hidden="true"></i>(212) 555-0142</a></li>
+              <li><a href="https://wa.me/12125550142" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3"><i class="icon icon-whatsapp size-7" aria-hidden="true"></i>Message us on WhatsApp</a></li>
               <li><a href="mailto:contact@highr.example" class="flex items-center gap-3"><i class="icon icon-mail size-7" aria-hidden="true"></i>contact@highr.example</a></li>
             </ul>
+            <p class="max-w-[328px] text-white" data-reveal><span class="text-white/70">Sales office &amp; show homes</span><br>Monday to Saturday, 9 am to 6 pm</p>
             <ul class="flex items-center gap-2" data-reveal>
               <li><a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Highr on X"><i class="icon icon-x" aria-hidden="true"></i></a></li>
               <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Highr on Instagram"><i class="icon icon-instagram" aria-hidden="true"></i></a></li>
@@ -638,6 +650,13 @@
     </div>
   </footer>
 
+  <!-- Mobile action bar: shown after the hero, hidden once the footer form is in view -->
+  <nav class="actionbar" aria-label="Quick contact" data-actionbar>
+    <a href="tel:+12125550142" class="actionbar__btn"><i class="icon icon-phone" aria-hidden="true"></i>Call</a>
+    <a href="https://wa.me/12125550142" target="_blank" rel="noopener noreferrer" class="actionbar__btn"><i class="icon icon-whatsapp" aria-hidden="true"></i>WhatsApp</a>
+    <a href="#contact" class="actionbar__btn actionbar__btn--primary">Book a tour</a>
+  </nav>
+
   <script src="js/reveal.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/parallax.js" defer></script>
@@ -645,6 +664,7 @@
   <script src="js/counters.js" defer></script>
   <script src="js/form.js" defer></script>
   <script src="js/slider.js" defer></script>
+  <script src="js/actionbar.js" defer></script>
   <!-- @scripts -->
 </body>
 </html>

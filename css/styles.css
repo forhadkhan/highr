@@ -196,6 +196,7 @@
   .icon-chevron-right { --icon: url('../assets/icons/chevron-right.svg'); }
   .icon-chevron-down { --icon: url('../assets/icons/chevron-down.svg'); }
   .icon-chevron-up { --icon: url('../assets/icons/chevron-up.svg'); }
+  .icon-whatsapp { --icon: url('../assets/icons/whatsapp.svg'); }
   .icon-asterisk { --icon: url('../assets/icons/asterisk.svg'); }
   .icon-x { --icon: url('../assets/icons/x.svg'); }
   .icon-instagram { --icon: url('../assets/icons/instagram.svg'); }
@@ -739,6 +740,57 @@
   .trustbar__list .icon { width: 20px; height: 20px; color: var(--color-success); }
   @media (min-width: 640px) { .trustbar__list { grid-template-columns: repeat(2, auto); justify-content: space-between; } }
   @media (min-width: 1024px) { .trustbar__list { grid-template-columns: repeat(4, auto); } }
+
+  /* ---------- Header phone, form select, mobile action bar ---------- */
+  .header-phone {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-right: 12px;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .header-phone:hover { opacity: 0.7; }
+  .header-phone .icon { width: 20px; height: 20px; }
+  @media (min-width: 1280px) { .header-phone { display: inline-flex; } }
+
+  .field-select { position: relative; }
+  .field-select .icon { position: absolute; right: 0; top: 0; width: 24px; height: 24px; color: #fff; pointer-events: none; }
+  select.field { appearance: none; -webkit-appearance: none; padding-right: 36px; cursor: pointer; }
+  select.field:has(option[value='']:checked) { color: rgb(255 255 255 / 0.5); }
+  select.field option { color: #1e1e1e; background: #fff; }
+
+  .actionbar {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 40;
+    display: flex;
+    gap: 8px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: #000;
+    box-shadow: 0 -1px 0 rgb(255 255 255 / 0.15);
+    transform: translateY(110%);
+    transition: transform 0.4s var(--ease-out);
+  }
+  .actionbar.is-visible { transform: none; }
+  .actionbar__btn {
+    display: inline-flex;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 10px;
+    border: 1px solid rgb(255 255 255 / 0.35);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.9375rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .actionbar__btn .icon { width: 18px; height: 18px; }
+  .actionbar__btn--primary { flex: 1.4 1 0; border-color: #fff; background: #fff; color: #000; }
+  @media (min-width: 768px) { .actionbar { display: none; } }
 
   /* ---------- Reduced motion: show everything, no movement ---------- */
   @media (prefers-reduced-motion: reduce) {

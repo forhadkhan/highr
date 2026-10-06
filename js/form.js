@@ -13,7 +13,16 @@
   var ok = form.querySelector('.form-msg--ok');
   var err = form.querySelector('.form-msg--err');
   var submit = form.querySelector('[type="submit"]');
-  var fields = Array.prototype.slice.call(form.querySelectorAll('input, textarea'));
+  var fields = Array.prototype.slice.call(form.querySelectorAll('input, textarea, select'));
+
+  // ?interest=Skyline%20Haven preselects the home (used by the "Request details" links)
+  var interest = form.querySelector('[name="interest"]');
+  var wanted = new URLSearchParams(window.location.search).get('interest');
+  if (interest && wanted) {
+    Array.prototype.forEach.call(interest.options, function (o) {
+      if (o.text.toLowerCase().indexOf(wanted.toLowerCase()) === 0) interest.value = o.value || o.text;
+    });
+  }
 
   function validate(field) {
     var bad = !field.checkValidity();
