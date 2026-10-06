@@ -43,6 +43,7 @@ tools/
   projects.py       data for the four communities
   legal.py          text of the Privacy Policy and Terms
   optimize-images.py  responsive photo copies and placeholders (needs Pillow)
+  make-share-images.py  Open Graph / Twitter card images (needs Pillow and Chrome)
 assets/             images, logos, icons (SVG, used as CSS masks via .icon-*), fonts (Poppins woff2)
 ```
 
@@ -57,9 +58,11 @@ assets/             images, logos, icons (SVG, used as CSS masks via .icon-*), f
 - **Domain:** set `SITE_URL` in `tools/build-pages.py` and run it. It writes canonical URLs, Open Graph
   URLs, JSON-LD and `sitemap.xml`. Also change the Open Graph image URLs in the head of `index.html`.
 - **Share previews (Open Graph and Twitter cards):** the home page tags are written by hand in the head of
-  `index.html`; the community and legal pages get theirs from `og_tags()` in `tools/build-pages.py`. Each community
-  uses its own 1200 x 630 image, `assets/images/social/og-<photo>.jpg`, made by `tools/optimize-images.py`; the home
-  and legal pages use `assets/images/og-image.jpg`. Paste a page URL into a link-preview checker after publishing.
+  `index.html`; the community and legal pages get theirs from `og_tags()` in `tools/build-pages.py`. The 1200 x 630
+  images carry the logo, a headline, the starting price and a "Book a tour" button over the photo. Make them with
+  `python3 tools/make-share-images.py` (needs Pillow and Google Chrome); it writes `assets/images/og-image.jpg` (home,
+  Privacy, Terms) and `assets/images/social/og-<photo>.jpg` (one per community). Run it after changing a community's
+  name, type, price or photo. Paste a page URL into a link-preview checker after publishing.
 - **Styles:** Tailwind utility classes live in the markup, theme tokens in `css/tailwind.src.css`.
   After adding classes run:
 
