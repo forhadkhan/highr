@@ -37,7 +37,7 @@ css/
   styles.css        custom styles (fonts, buttons, sections, motion)
   tailwind.src.css  Tailwind entry and theme tokens (colors, type scale)
   tailwind.css      compiled output, committed
-js/                 reveal, nav, parallax, tabs, counters, slider, form, actionbar, lightbox
+js/                 reveal, images, nav, parallax, tabs, counters, slider, form, actionbar, lightbox
 tools/
   build-pages.py    generator (standard-library Python)
   projects.py       data for the four communities
@@ -81,7 +81,11 @@ assets/             images, logos, icons (SVG, used as CSS masks via .icon-*), f
 - **Community photos:** put the full-size original (about 1500 px wide, `.webp`) in `assets/images/projects/`, then run
   `pip install pillow` once and `python3 tools/optimize-images.py`. It makes 480, 800 and 1200 px copies and a tiny
   placeholder per photo; `build-pages.py` adds the `srcset` so phones download 20 to 60 KB instead of 150 to 300 KB,
-  and the placeholder shows while the photo loads. Commit the copies and `placeholders.json`.
+  and the placeholder shows while the photo loads. Commit the copies and `placeholders.json`. The About photo
+  (`assets/images/about-image.webp`) gets the same copies; its `srcset` and placeholder are written by hand in
+  `index.html`. Until a photo has loaded (or if it fails) a large building icon shows behind it
+  (`.project-media::before`, `.about-media::before`), and `js/images.js` fetches these photos as soon as the page
+  has loaded instead of waiting for native lazy loading.
 - **Lightbox:** `js/lightbox.js` opens any `<a href="full.jpg" data-lightbox="group" data-caption="…">` in a modal
   viewer (floor plans and gallery use it). Links sharing a group name get previous/next; the overlay is a solid
   dimmed black with no blur. Without JavaScript the link opens the image.

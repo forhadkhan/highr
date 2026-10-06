@@ -459,6 +459,25 @@
     background: var(--color-smoke) center / cover no-repeat;
   }
   .project-media img { transition: transform 1s var(--ease-out); }
+
+  /* Photo placeholder: a large building icon sits behind the photo until it has loaded
+     (and stays if it never does). The image is positioned so it paints over the icon. */
+  .project-media::before,
+  .about-media::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: clamp(72px, 26%, 150px);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    background: rgb(255 255 255 / 0.85);
+    -webkit-mask: url('../assets/icons/building-tower.svg') center / contain no-repeat;
+    mask: url('../assets/icons/building-tower.svg') center / contain no-repeat;
+  }
+  .about-media::before { width: clamp(96px, 30%, 180px); }
+  .project-media img,
+  .about-media img { position: relative; }
   .project-item:hover .project-media img { transform: scale(1.05); }
   .project-item.filter-in { animation: filter-in 0.6s calc(var(--i, 0) * 90ms) var(--ease-out) both; }
   @keyframes filter-in {
@@ -511,9 +530,10 @@
 
   /* ---------- About ---------- */
   .about-media {
+    position: relative;
     overflow: hidden;
     aspect-ratio: 4 / 5;
-    background: var(--color-smoke);
+    background: var(--color-smoke) center / cover no-repeat;
   }
   @media (min-width: 1024px) { .about-media { aspect-ratio: auto; min-height: 560px; } }
   .about-media img { scale: 1.12; }

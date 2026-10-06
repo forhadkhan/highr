@@ -542,6 +542,7 @@ def project_page(p, parts, others):
   {actionbar}
 
   <script src="js/reveal.js" defer></script>
+  <script src="js/images.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/parallax.js" defer></script>
   <script src="js/counters.js" defer></script>
