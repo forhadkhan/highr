@@ -399,16 +399,6 @@
     .project-item.filter-in { animation: none; }
   }
 
-  /* ---------- Press logos ---------- */
-  .client-logo {
-    height: 20px;
-    width: auto;
-    opacity: 0.85;
-    transition: opacity 0.3s, transform 0.4s var(--ease-out);
-  }
-  .client-logo:hover { opacity: 1; transform: translateY(-2px); }
-  @media (min-width: 768px) { .client-logo { height: 30px; } }
-
   /* ---------- Project tabs ---------- */
   .tabs { display: flex; flex-wrap: wrap; gap: 12px 24px; }
   .tab {
@@ -467,6 +457,15 @@
     color: var(--color-success);
   }
   .status-ring--done .icon { width: 20px; height: 20px; }
+
+  /* ---------- About ---------- */
+  .about-media {
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--color-smoke);
+  }
+  @media (min-width: 1024px) { .about-media { aspect-ratio: auto; min-height: 560px; } }
+  .about-media img { scale: 1.12; }
 
   /* ---------- Reduced motion: show everything, no movement ---------- */
   @media (prefers-reduced-motion: reduce) {
