@@ -1,5 +1,5 @@
 /**
- * Contact form: client-side validation and a status message.
+ * Contact form: client-side validation (inline error text under each field) and a status message.
  *
  * Set `data-endpoint="https://…"` on the <form> to POST the fields as JSON to your own backend or
  * form service. Without it the form only validates and shows the success message (demo mode).
@@ -15,6 +15,10 @@
   var submit = form.querySelector('[type="submit"]');
   var fields = Array.prototype.slice.call(form.querySelectorAll('input, textarea, select'));
 
+  var today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  var date = form.querySelector('[type="date"]');
+  if (date) date.min = today;
+
   // ?interest=Skyline%20Haven or data-interest="Skyline Haven" on the form preselects the home
   var interest = form.querySelector('[name="interest"]');
   var wanted = new URLSearchParams(window.location.search).get('interest') || form.getAttribute('data-interest');
@@ -24,12 +28,24 @@
     });
   }
 
+  function errorNode(field) {
+    var group = field.closest('.field-group');
+    return group && group.querySelector('.field-error');
+  }
+
   function validate(field) {
     var bad = !field.checkValidity();
     if (field.type === 'email' && field.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) bad = true;
     if (field.type === 'tel' && field.value && !/^[+()\d\s.-]{6,}$/.test(field.value)) bad = true;
-    if (bad) field.setAttribute('aria-invalid', 'true');
-    else field.removeAttribute('aria-invalid');
+    if (field.type === 'date' && field.value && field.value < today) bad = true;
+    var node = errorNode(field);
+    if (bad) {
+      field.setAttribute('aria-invalid', 'true');
+      if (node) { node.textContent = field.getAttribute('data-error') || 'Check this field.'; node.hidden = false; }
+    } else {
+      field.removeAttribute('aria-invalid');
+      if (node) { node.textContent = ''; node.hidden = true; }
+    }
     return !bad;
   }
 

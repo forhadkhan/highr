@@ -120,7 +120,7 @@
   <link rel="stylesheet" href="css/tailwind.css">
 </head>
 
-<body class="bg-white font-sans text-base font-medium text-ink antialiased">
+<body class="bg-white font-sans text-base font-normal text-ink antialiased">
   <script>document.documentElement.classList.add('js');</script>
   <a href="#main" class="skip-link">Skip to content</a>
 
@@ -305,6 +305,12 @@
                 <p class="card-more" aria-hidden="true">View details <i class="icon icon-chevron-right " aria-hidden="true"></i></p>
               </article>
             </li>
+
+
+
+
+
+
 
 
 
@@ -679,47 +685,73 @@
           <h2 id="contact-title" class="max-w-[460px] text-h2 text-white" data-reveal data-split>We’d love to hear from you.</h2>
           <p class="max-w-[420px] text-white" data-reveal data-reveal-delay="100">Whether you’re exploring investment opportunities or searching for your next dream home,<br><br>our team is here to help you every step of the way.</p>
 
-          <form class="contact-form flex flex-col gap-10" data-contact-form novalidate data-reveal data-reveal-delay="150">
+          <form class="contact-form flex flex-col gap-7" data-contact-form novalidate data-reveal data-reveal-delay="150">
             
-            <div>
-              <label for="f-name" class="sr-only">Full name*</label>
-              <input id="f-name" name="name" type="text" maxlength="256" placeholder="Full name*" class="field" autocomplete="name" required>
+            <div class="field-group">
+              <label for="f-name" class="field-label">Full name <span class="field-req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" maxlength="256" placeholder="Jane Smith" class="field" autocomplete="name" aria-describedby="f-name-err" data-error="Enter your name." required>
+              <p class="field-error" id="f-name-err" hidden></p>
             </div>
-            <div>
-              <label for="f-email" class="sr-only">Email address*</label>
-              <input id="f-email" name="email" type="email" maxlength="256" placeholder="Email address*" class="field" autocomplete="email" required>
+            <div class="field-group">
+              <label for="f-email" class="field-label">Email address <span class="field-req" aria-hidden="true">*</span></label>
+              <input id="f-email" name="email" type="email" maxlength="256" placeholder="you@example.com" class="field" autocomplete="email" aria-describedby="f-email-err" data-error="Enter a valid email address, like name@example.com." required>
+              <p class="field-error" id="f-email-err" hidden></p>
             </div>
-            <div>
-              <label for="f-phone" class="sr-only">Phone number*</label>
-              <input id="f-phone" name="phone" type="tel" maxlength="256" placeholder="Phone number*" class="field" autocomplete="tel" required>
+            <div class="field-group">
+              <label for="f-phone" class="field-label">Phone number <span class="field-opt">(optional)</span></label>
+              <input id="f-phone" name="phone" type="tel" maxlength="256" placeholder="(555) 000-0000" class="field" autocomplete="tel" aria-describedby="f-phone-err" data-error="Enter a valid phone number, or leave it blank.">
+              <p class="field-error" id="f-phone-err" hidden></p>
             </div>
-            <div class="field-select">
-              <label for="f-interest" class="sr-only">I’m interested in</label>
-              <select id="f-interest" name="interest" class="field">
-                <option value="">I’m interested in…</option>
-                <option>Skyline Haven, Austin</option>
-                <option>The Atria Tower, Chicago</option>
-                <option>Coastline Residences, Charleston</option>
-                <option>Verdant Grove, Portland</option>
-                <option>Investing in a Highr community</option>
-                <option>Not sure yet</option>
-              </select>
-              <i class="icon icon-chevron-down" aria-hidden="true"></i>
+            <div class="field-group">
+              <label for="f-interest" class="field-label">I’m interested in</label>
+              <div class="field-select">
+                <select id="f-interest" name="interest" class="field">
+                  <option value="">Select one…</option>
+                  <option>Skyline Haven, Austin</option>
+                  <option>The Atria Tower, Chicago</option>
+                  <option>Coastline Residences, Charleston</option>
+                  <option>Verdant Grove, Portland</option>
+                  <option>Investing in a Highr community</option>
+                  <option>Not sure yet</option>
+                </select>
+                <i class="icon icon-chevron-down" aria-hidden="true"></i>
+              </div>
             </div>
-            <div>
-              <label for="f-message" class="sr-only">Message</label>
-              <textarea id="f-message" name="message" maxlength="5000" rows="3" placeholder="Write your message or specific request here..." class="field field--area"></textarea>
+            <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-8">
+              <div class="field-group">
+                <label for="f-date" class="field-label">Preferred tour date <span class="field-opt">(optional)</span></label>
+                <input id="f-date" name="tour_date" type="date" class="field field--date" aria-describedby="f-date-err" data-error="Choose a date that is today or later.">
+                <p class="field-error" id="f-date-err" hidden></p>
+              </div>
+              <div class="field-group">
+                <label for="f-reach" class="field-label">Best way to reach you</label>
+                <div class="field-select">
+                  <select id="f-reach" name="contact_method" class="field">
+                    <option>Email</option>
+                    <option>Phone call</option>
+                    <option>Text or WhatsApp</option>
+                  </select>
+                  <i class="icon icon-chevron-down" aria-hidden="true"></i>
+                </div>
+              </div>
             </div>
-            <label class="check -mt-4">
-              <input type="checkbox" name="consent" required>
-              <span class="check__box" aria-hidden="true"></span>
-              <span class="text-white">I agree to the <a href="terms" class="underline underline-offset-4">terms</a> &amp; <a href="privacy" class="underline underline-offset-4">privacy policy</a></span>
-            </label>
+            <div class="field-group">
+              <label for="f-message" class="field-label">Message <span class="field-opt">(optional)</span></label>
+              <textarea id="f-message" name="message" maxlength="5000" rows="3" placeholder="Tell us what you’re looking for: bedrooms, budget, timing…" class="field field--area"></textarea>
+            </div>
+            <div class="field-group -mt-2">
+              <label class="check">
+                <input type="checkbox" name="consent" aria-describedby="f-consent-err" data-error="Please accept the terms and privacy policy to continue." required>
+                <span class="check__box" aria-hidden="true"></span>
+                <span class="text-white">I agree to the <a href="terms" class="underline underline-offset-4">terms</a> &amp; <a href="privacy" class="underline underline-offset-4">privacy policy</a></span>
+              </label>
+              <p class="field-error" id="f-consent-err" hidden></p>
+            </div>
             <div class="flex flex-col items-start gap-4">
               <button type="submit" class="btn btn--light">
                 <span class="btn__label"><span>Send Inquiry</span><span aria-hidden="true">Send Inquiry</span></span>
               </button>
-              <p class="form-msg form-msg--ok" role="status" hidden>Thank you! Your submission has been received.</p>
+              <p class="form-msg form-msg--ok" role="status" hidden>Thank you! We’ve received your inquiry. An advisor will reply within one business day.</p>
               <p class="form-msg form-msg--err" role="alert" hidden>Oops! Something went wrong while submitting the form. Please try again.</p>
             </div>
           </form>

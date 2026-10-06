@@ -368,7 +368,7 @@ def project_page(p, parts, others):
   {tailwind}
 </head>
 
-<body class="bg-white font-sans text-base font-medium text-ink antialiased">
+<body class="bg-white font-sans text-base font-normal text-ink antialiased">
   <script>document.documentElement.classList.add('js');</script>
   <a href="#main" class="skip-link">Skip to content</a>
 
@@ -538,7 +538,7 @@ def legal_page(page, parts):
   {tailwind}
 </head>
 
-<body class="bg-white font-sans text-base font-medium text-ink antialiased">
+<body class="bg-white font-sans text-base font-normal text-ink antialiased">
   <script>document.documentElement.classList.add('js');</script>
   <a href="#main" class="skip-link">Skip to content</a>
 

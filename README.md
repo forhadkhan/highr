@@ -90,7 +90,8 @@ All of this is made up for the template:
 - Photos and plans: each community has one image, so no Gallery section shows, and the floor plans are
   generated schematics. Add real photos (`gallery`) and plans (`assets/plans/`), see Editing.
 - `SITE_URL` in `tools/build-pages.py` (currently the GitHub Pages URL), and the og:image URL in `index.html`.
-- **Contact form:** it validates and shows a success message but sends nothing until you set
+- **Contact form:** name and email are required (phone, tour date, contact method and message are optional);
+  errors show under each field. It validates and shows a success message but sends nothing until you set
   `data-endpoint="https://…"` on the `<form data-contact-form>`; it then POSTs the fields as JSON.
   The form on a community page preselects that community (`data-interest`), and `?interest=Name` works
   on any page.
