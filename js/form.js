@@ -15,9 +15,9 @@
   var submit = form.querySelector('[type="submit"]');
   var fields = Array.prototype.slice.call(form.querySelectorAll('input, textarea, select'));
 
-  // ?interest=Skyline%20Haven preselects the home (used by the "Request details" links)
+  // ?interest=Skyline%20Haven or data-interest="Skyline Haven" on the form preselects the home
   var interest = form.querySelector('[name="interest"]');
-  var wanted = new URLSearchParams(window.location.search).get('interest');
+  var wanted = new URLSearchParams(window.location.search).get('interest') || form.getAttribute('data-interest');
   if (interest && wanted) {
     Array.prototype.forEach.call(interest.options, function (o) {
       if (o.text.toLowerCase().indexOf(wanted.toLowerCase()) === 0) interest.value = o.value || o.text;

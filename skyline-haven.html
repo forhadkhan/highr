@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en-US" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skyline Haven – Urban Apartments in Austin, TX | Highr</title>
+  <meta name="description" content="Open-plan apartments with green terraces and panoramic glass, in the middle of downtown Austin. Homes from $425,000. See pricing, home types and location.">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Skyline Haven – Urban Apartments in Austin, TX | Highr">
+  <meta property="og:description" content="Open-plan apartments with green terraces and panoramic glass, in the middle of downtown Austin.">
+  <meta property="og:image" content="assets/images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+  <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/poppins-500.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Tailwind v4 Play CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme static {
+      --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+      --color-ink: #1e1e1e;
+      --color-ink-500: rgb(30 30 30 / 0.5);
+      --color-ink-700: rgb(30 30 30 / 0.7);
+      --color-ink-100: rgb(30 30 30 / 0.1);
+      --color-smoke: #f5f5f5;
+      --color-brand: #0968ff;
+      --color-success: #2aa22e;
+      --color-star: #ff9100;
+
+      --text-h1: clamp(2.5rem, 1.55rem + 4.1vw, 5rem);
+      --text-h1--line-height: 1.1;
+      --text-h1--letter-spacing: -0.025em;
+      --text-h2: clamp(2.125rem, 1.4rem + 3.1vw, 4rem);
+      --text-h2--line-height: 1.1;
+      --text-h2--letter-spacing: -0.047em;
+      --text-h3: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem);
+      --text-h3--line-height: 1.2;
+      --text-h3--letter-spacing: -0.025em;
+      --text-h4: clamp(1.375rem, 1.15rem + 1vw, 2rem);
+      --text-h4--line-height: 1.2;
+      --text-h4--letter-spacing: -0.031em;
+      --text-lead: clamp(1.125rem, 1.05rem + 0.3vw, 1.5rem);
+      --text-lead--line-height: 1.4;
+      --text-body-lg: 1.25rem;
+      --text-body-lg--line-height: 1.4;
+
+      --breakpoint-xs: 30rem;
+    }
+  </style>
+</head>
+
+<body class="bg-white font-sans text-base font-medium text-ink antialiased">
+  <script>document.documentElement.classList.add('js');</script>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header id="site-header" class="site-header">
+    <div class="container-page">
+      <div class="flex h-[var(--header-h)] items-center justify-between gap-4">
+        <a href="index.html" class="shrink-0" aria-label="Highr, home">
+          <img src="assets/logos/logo-white.svg" alt="Highr" width="109" height="40" class="h-auto w-[96px] sm:w-[110px]">
+        </a>
+
+        <nav id="site-nav" class="nav-panel" aria-label="Primary">
+          <ul class="flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-6">
+            <li><a href="index.html#projects" class="nav-link" data-nav-link aria-current="true">Homes</a></li>
+            <li><a href="index.html#about" class="nav-link" data-nav-link>About Us</a></li>
+            <li><a href="index.html#process" class="nav-link" data-nav-link>How it works</a></li>
+            <li><a href="index.html#testimonial" class="nav-link" data-nav-link>Reviews</a></li>
+            <li><a href="index.html#faq" class="nav-link" data-nav-link>FAQ</a></li>
+          </ul>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <a href="tel:+12125550142" class="header-phone"><i class="icon icon-phone" aria-hidden="true"></i>(212) 555-0142</a>
+          <a href="#contact" class="btn btn--light !px-5 !py-3.5 sm:!px-7 sm:!py-4">
+            <span class="btn__label"><span>Book a tour</span><span aria-hidden="true">Book a tour</span></span>
+          </a>
+          <button type="button" class="menu-toggle lg:hidden" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu" data-menu-toggle>
+            <span class="menu-toggle__bar"></span>
+            <span class="menu-toggle__bar"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="top" class="hero bg-white" aria-labelledby="project-title">
+      <div class="container-page">
+        <div class="flex flex-col items-start gap-6 md:gap-8">
+          <nav class="crumbs" aria-label="Breadcrumb" data-reveal="fade">
+            <ol>
+              <li><a href="index.html#projects">Communities</a></li>
+              <li><i class="icon icon-chevron-right " aria-hidden="true"></i></li>
+              <li aria-current="page">Skyline Haven</li>
+            </ol>
+          </nav>
+          <p class="flex items-center gap-3 text-body-lg" data-reveal data-reveal-delay="60"><span class="status-ring" style="--p: 68" aria-hidden="true"></span><span>68% built · Completes Q3 2027</span></p>
+          <h1 id="project-title" class="text-h1" data-reveal data-split data-reveal-delay="100">Skyline Haven</h1>
+          <p class="max-w-[620px] text-lead text-ink-700" data-reveal data-reveal-delay="300">Open-plan apartments with green terraces and panoramic glass, in the middle of downtown Austin.</p>
+          <div class="flex flex-wrap items-center gap-x-7 gap-y-5" data-reveal data-reveal-delay="420">
+            <a href="#contact" class="btn">
+              <span class="btn__label"><span>Request details</span><span aria-hidden="true">Request details</span></span>
+            </a>
+            <a href="tel:+12125550142" class="link-quiet">Call (212) 555-0142</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="hero-media">
+      <img src="assets/images/projects/project1.webp" alt="Glass residential tower with green terraces against a city skyline" width="1500" height="1002" fetchpriority="high" class="hero-media__img" data-parallax="0.12">
+    </div>
+
+    <section class="section-y bg-white" aria-label="Key facts">
+      <div class="container-page">
+        <dl class="grid grid-cols-1 gap-px border border-ink-100 bg-ink-100 sm:grid-cols-2 xl:grid-cols-5">
+          <div class="flex flex-col gap-3 bg-white p-6 sm:p-8" data-reveal data-reveal-delay="0">
+            <dt class="text-ink-700">Homes from</dt>
+            <dd class="text-h4">$425,000</dd>
+          </div>
+          <div class="flex flex-col gap-3 bg-white p-6 sm:p-8" data-reveal data-reveal-delay="70">
+            <dt class="text-ink-700">Bedrooms</dt>
+            <dd class="text-h4">1–3</dd>
+          </div>
+          <div class="flex flex-col gap-3 bg-white p-6 sm:p-8" data-reveal data-reveal-delay="140">
+            <dt class="text-ink-700">Home size</dt>
+            <dd class="text-h4">520–1,480 sq ft</dd>
+          </div>
+          <div class="flex flex-col gap-3 bg-white p-6 sm:p-8" data-reveal data-reveal-delay="210">
+            <dt class="text-ink-700">Community</dt>
+            <dd class="text-h4">142 apartments</dd>
+          </div>
+          <div class="flex flex-col gap-3 bg-white p-6 sm:p-8" data-reveal data-reveal-delay="280">
+            <dt class="text-ink-700">Handover</dt>
+            <dd class="text-h4">Q3 2027</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="bg-white pb-[var(--section-y)]" aria-labelledby="overview-title">
+      <div class="container-page">
+        <div class="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_0.85fr] lg:gap-[100px]">
+          <div class="flex flex-col gap-6">
+            <h2 id="overview-title" class="text-h2" data-reveal data-split>About Skyline Haven</h2>
+            <div class="flex flex-col gap-6" data-stagger="120" data-stagger-base="150">
+              <p class="max-w-[640px] text-ink-700" data-reveal>Skyline Haven is a 26-story residential tower of studios, one-, two- and three-bedroom apartments. Every home has floor-to-ceiling glass, a private balcony or terrace, and a layout designed around natural light and cross-ventilation.</p>
+              <p class="max-w-[640px] text-ink-700" data-reveal>Shared spaces are built for everyday use: a landscaped podium garden, a rooftop pool, a co-working lounge and a fitness studio. A concierge team is on site around the clock.</p>
+            </div>
+          </div>
+          <div class="flex flex-col gap-6" data-reveal data-reveal-delay="120">
+            <h3 class="text-h4">Highlights</h3>
+            <ul class="flex flex-col gap-4 text-body-lg">
+            <li class="flex items-start gap-3"><i class="icon icon-check-circle mt-0.5 text-success" aria-hidden="true"></i><span>Floor-to-ceiling glass and private terraces</span></li>
+            <li class="flex items-start gap-3"><i class="icon icon-check-circle mt-0.5 text-success" aria-hidden="true"></i><span>Rooftop pool and landscaped podium garden</span></li>
+            <li class="flex items-start gap-3"><i class="icon icon-check-circle mt-0.5 text-success" aria-hidden="true"></i><span>Co-working lounge and fitness studio</span></li>
+            <li class="flex items-start gap-3"><i class="icon icon-check-circle mt-0.5 text-success" aria-hidden="true"></i><span>EV charging and secure bike storage</span></li>
+            <li class="flex items-start gap-3"><i class="icon icon-check-circle mt-0.5 text-success" aria-hidden="true"></i><span>24/7 concierge and package room</span></li>
+            <li class="flex items-start gap-3"><i class="icon icon-check-circle mt-0.5 text-success" aria-hidden="true"></i><span>Smart locks and thermostats in every home</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="homes" class="section-y bg-smoke" aria-labelledby="types-title">
+      <div class="container-page">
+        <div class="flex flex-col gap-6">
+          <p class="text-body-lg" data-reveal>Pricing</p>
+          <h2 id="types-title" class="max-w-[640px] text-h2" data-reveal data-split data-reveal-delay="80">Home types and pricing</h2>
+        </div>
+        <div class="mt-10 md:mt-[60px]" data-reveal data-reveal-delay="120">
+          <table class="types">
+            <thead>
+              <tr><th scope="col">Home type</th><th scope="col">Bedrooms</th><th scope="col">Bathrooms</th><th scope="col">Size (sq ft)</th><th scope="col">From</th><th scope="col">Availability</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" data-label="Home type">Studio</th>
+                <td data-label="Bedrooms">Studio</td>
+                <td data-label="Bathrooms">1</td>
+                <td data-label="Size (sq ft)">520</td>
+                <td data-label="From">$425,000</td>
+                <td data-label="Availability"><span class="pill pill--warn">Limited</span></td>
+              </tr>
+              <tr>
+                <th scope="row" data-label="Home type">One-bedroom</th>
+                <td data-label="Bedrooms">1</td>
+                <td data-label="Bathrooms">1</td>
+                <td data-label="Size (sq ft)">710</td>
+                <td data-label="From">$489,000</td>
+                <td data-label="Availability"><span class="pill pill--ok">Available</span></td>
+              </tr>
+              <tr>
+                <th scope="row" data-label="Home type">Two-bedroom</th>
+                <td data-label="Bedrooms">2</td>
+                <td data-label="Bathrooms">2</td>
+                <td data-label="Size (sq ft)">1,080</td>
+                <td data-label="From">$639,000</td>
+                <td data-label="Availability"><span class="pill pill--ok">Available</span></td>
+              </tr>
+              <tr>
+                <th scope="row" data-label="Home type">Three-bedroom penthouse</th>
+                <td data-label="Bedrooms">3</td>
+                <td data-label="Bathrooms">2.5</td>
+                <td data-label="Size (sq ft)">1,480</td>
+                <td data-label="From">$899,000</td>
+                <td data-label="Availability"><span class="pill ">Waitlist</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <a href="#contact" class="btn">
+            <span class="btn__label"><span>Request floor plans</span><span aria-hidden="true">Request floor plans</span></span>
+          </a>
+          <p class="max-w-[460px] text-sm text-ink-700">Prices are starting prices and may change. Floor plans, finish packages and current availability are sent by your advisor.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="progress" class="section-y bg-white" aria-labelledby="progress-title">
+      <div class="container-page">
+        <div class="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_0.85fr] lg:gap-[100px]">
+          <div class="flex flex-col items-start gap-6">
+            <h2 id="progress-title" class="text-h2" data-reveal data-split>Construction progress</h2>
+            <p class="text-h1 leading-none" data-count="68" data-prefix="" data-suffix="%" data-decimals="0">68%</p>
+            <div class="meter" role="progressbar" aria-label="Construction progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68"><span style="width: 68%"></span></div>
+            <p class="max-w-[420px] text-ink-700">Construction is 68% complete. Handover is planned for Q3 2027, and reserved buyers receive progress updates throughout the build.</p>
+          </div>
+          <ol class="timeline" aria-label="Construction milestones">
+            <li data-state="done" data-reveal data-reveal-delay="0">
+              <p class="text-body-lg">Land and permits</p>
+              <p class="text-sm text-ink-700">Done · Q2 2024</p>
+            </li>
+            <li data-state="done" data-reveal data-reveal-delay="60">
+              <p class="text-body-lg">Foundation</p>
+              <p class="text-sm text-ink-700">Done · Q4 2024</p>
+            </li>
+            <li data-state="done" data-reveal data-reveal-delay="120">
+              <p class="text-body-lg">Structure</p>
+              <p class="text-sm text-ink-700">Done · Q3 2025</p>
+            </li>
+            <li data-state="current" data-reveal data-reveal-delay="180">
+              <p class="text-body-lg">Façade and systems</p>
+              <p class="text-sm text-ink-700">In progress</p>
+            </li>
+            <li data-state="todo" data-reveal data-reveal-delay="240">
+              <p class="text-body-lg">Interiors</p>
+              <p class="text-sm text-ink-700">Planned · Q1 2027</p>
+            </li>
+            <li data-state="todo" data-reveal data-reveal-delay="300">
+              <p class="text-body-lg">Handover</p>
+              <p class="text-sm text-ink-700">Planned · Q3 2027</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="location" class="section-y bg-smoke" aria-labelledby="location-title">
+      <div class="container-page">
+        <div class="grid grid-cols-1 gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-[80px]">
+          <div class="flex flex-col gap-6">
+            <p class="text-body-lg" data-reveal>Downtown Austin</p>
+            <h2 id="location-title" class="text-h2" data-reveal data-split data-reveal-delay="80">Location</h2>
+            <ul class="mt-2 text-body-lg" data-reveal data-reveal-delay="160">
+            <li class="flex items-baseline justify-between gap-6 border-b border-ink-100 py-4"><span>Congress Avenue dining and shops</span><span class="shrink-0 text-ink-700">4 min walk</span></li>
+            <li class="flex items-baseline justify-between gap-6 border-b border-ink-100 py-4"><span>Lady Bird Lake trail</span><span class="shrink-0 text-ink-700">6 min walk</span></li>
+            <li class="flex items-baseline justify-between gap-6 border-b border-ink-100 py-4"><span>MetroRail station</span><span class="shrink-0 text-ink-700">8 min walk</span></li>
+            <li class="flex items-baseline justify-between gap-6 border-b border-ink-100 py-4"><span>Austin-Bergstrom Airport</span><span class="shrink-0 text-ink-700">18 min drive</span></li>
+            </ul>
+            <a href="https://www.openstreetmap.org/?mlat=30.2672&amp;mlon=-97.7431#map=15/30.2672/-97.7431" target="_blank" rel="noopener noreferrer" class="link-quiet self-start" data-reveal>Open in OpenStreetMap</a>
+          </div>
+          <div class="map" data-reveal="clip">
+            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-97.7551%2C30.2592%2C-97.7311%2C30.2752&amp;layer=mapnik&amp;marker=30.2672%2C-97.7431" title="Map showing the location of Skyline Haven in Downtown Austin" loading="lazy" referrerpolicy="no-referrer"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-y bg-white" aria-labelledby="other-title">
+      <div class="container-page">
+        <h2 id="other-title" class="text-h2" data-reveal data-split>Other communities</h2>
+        <ul class="mt-10 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3 md:mt-[60px]">
+          <li data-reveal data-reveal-delay="0">
+            <a href="the-atria-tower.html" class="other-card">
+              <div class="project-media"><img src="assets/images/projects/project3.webp" alt="Mixed-use glass high-rise in an urban setting" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover"></div>
+              <span class="mt-5 flex flex-col gap-1.5">
+                <span class="text-h4">The Atria Tower</span>
+                <span class="text-ink-700">Chicago, IL · From $610,000</span>
+              </span>
+            </a>
+          </li>
+          <li data-reveal data-reveal-delay="100">
+            <a href="coastline-residences.html" class="other-card">
+              <div class="project-media"><img src="assets/images/projects/project2.webp" alt="Seaside villas with private decks facing the Atlantic" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover"></div>
+              <span class="mt-5 flex flex-col gap-1.5">
+                <span class="text-h4">Coastline Residences</span>
+                <span class="text-ink-700">Charleston, SC · From $895,000</span>
+              </span>
+            </a>
+          </li>
+          <li data-reveal data-reveal-delay="200">
+            <a href="verdant-grove.html" class="other-card">
+              <div class="project-media"><img src="assets/images/projects/project4.webp" alt="Eco-living housing complex surrounded by greenery" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover"></div>
+              <span class="mt-5 flex flex-col gap-1.5">
+                <span class="text-h4">Verdant Grove</span>
+                <span class="text-ink-700">Portland, OR · From $540,000</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" class="site-footer" aria-labelledby="contact-title">
+    <div class="container-page">
+      <div class="grid grid-cols-1 gap-[60px] md:gap-[100px] lg:grid-cols-2 lg:gap-0">
+        <div class="flex flex-col gap-10 lg:border-r lg:border-white/20 lg:pr-10">
+          <h2 id="contact-title" class="max-w-[460px] text-h2 text-white" data-reveal data-split>We’d love to hear from you.</h2>
+          <p class="max-w-[420px] text-white" data-reveal data-reveal-delay="100">Whether you’re exploring investment opportunities or searching for your next dream home,<br><br>our team is here to help you every step of the way.</p>
+
+          <form class="contact-form flex flex-col gap-10" data-contact-form data-interest="Skyline Haven" novalidate data-reveal data-reveal-delay="150">
+            
+            <div>
+              <label for="f-name" class="sr-only">Full name*</label>
+              <input id="f-name" name="name" type="text" maxlength="256" placeholder="Full name*" class="field" autocomplete="name" required>
+            </div>
+            <div>
+              <label for="f-email" class="sr-only">Email address*</label>
+              <input id="f-email" name="email" type="email" maxlength="256" placeholder="Email address*" class="field" autocomplete="email" required>
+            </div>
+            <div>
+              <label for="f-phone" class="sr-only">Phone number*</label>
+              <input id="f-phone" name="phone" type="tel" maxlength="256" placeholder="Phone number*" class="field" autocomplete="tel" required>
+            </div>
+            <div class="field-select">
+              <label for="f-interest" class="sr-only">I’m interested in</label>
+              <select id="f-interest" name="interest" class="field">
+                <option value="">I’m interested in…</option>
+                <option>Skyline Haven, Austin</option>
+                <option>The Atria Tower, Chicago</option>
+                <option>Coastline Residences, Charleston</option>
+                <option>Verdant Grove, Portland</option>
+                <option>Investing in a Highr community</option>
+                <option>Not sure yet</option>
+              </select>
+              <i class="icon icon-chevron-down" aria-hidden="true"></i>
+            </div>
+            <div>
+              <label for="f-message" class="sr-only">Message</label>
+              <textarea id="f-message" name="message" maxlength="5000" rows="3" placeholder="Write your message or specific request here..." class="field field--area"></textarea>
+            </div>
+            <label class="check -mt-4">
+              <input type="checkbox" name="consent" required>
+              <span class="check__box" aria-hidden="true"></span>
+              <span class="text-white">I agree to the terms &amp; privacy policy</span>
+            </label>
+            <div class="flex flex-col items-start gap-4">
+              <button type="submit" class="btn btn--light">
+                <span class="btn__label"><span>Send Inquiry</span><span aria-hidden="true">Send Inquiry</span></span>
+              </button>
+              <p class="form-msg form-msg--ok" role="status" hidden>Thank you! Your submission has been received.</p>
+              <p class="form-msg form-msg--err" role="alert" hidden>Oops! Something went wrong while submitting the form. Please try again.</p>
+            </div>
+          </form>
+        </div>
+
+        <div class="flex flex-col justify-between gap-[100px] lg:gap-10 lg:pl-10">
+          <div class="flex flex-col items-start gap-8" data-stagger="100">
+            <a href="index.html" aria-label="Highr, home" data-reveal><img src="assets/logos/logo-white.svg" alt="Highr" width="109" height="40" class="footer-logo"></a>
+            <h2 class="text-h3 text-white" data-reveal>Headquarters</h2>
+            <p class="max-w-[328px] text-white" data-reveal><span class="text-white/70">Highr Real Estate, Inc. </span>500 Market Street, Suite 1200 San Francisco, CA 94105</p>
+            <ul class="flex flex-col gap-6 text-white" data-reveal>
+              <li><a href="tel:+12125550142" class="flex items-center gap-3"><i class="icon icon-phone size-7" aria-hidden="true"></i>(212) 555-0142</a></li>
+              <li><a href="https://wa.me/12125550142" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3"><i class="icon icon-whatsapp size-7" aria-hidden="true"></i>Message us on WhatsApp</a></li>
+              <li><a href="mailto:contact@highr.example" class="flex items-center gap-3"><i class="icon icon-mail size-7" aria-hidden="true"></i>contact@highr.example</a></li>
+            </ul>
+            <p class="max-w-[328px] text-white" data-reveal><span class="text-white/70">Sales office &amp; show homes</span><br>Monday to Saturday, 9 am to 6 pm</p>
+            <ul class="flex items-center gap-2" data-reveal>
+              <li><a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Highr on X"><i class="icon icon-x" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Highr on Instagram"><i class="icon icon-instagram" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Highr on Facebook"><i class="icon icon-facebook" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-white/20 pt-8 text-sm text-white/70">
+        <p>© 2026 Highr Real Estate, Inc. All rights reserved. Equal Housing Opportunity.<br>California DRE License #01234567 · Licensed general contractor CSLB #1234567</p>
+        <a href="#top" class="flex items-center gap-2 transition-colors hover:text-white">Back to top <i class="icon icon-chevron-up size-5" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="actionbar" aria-label="Quick contact" data-actionbar>
+    <a href="tel:+12125550142" class="actionbar__btn"><i class="icon icon-phone" aria-hidden="true"></i>Call</a>
+    <a href="https://wa.me/12125550142" target="_blank" rel="noopener noreferrer" class="actionbar__btn"><i class="icon icon-whatsapp" aria-hidden="true"></i>WhatsApp</a>
+    <a href="#contact" class="actionbar__btn actionbar__btn--primary">Book a tour</a>
+  </nav>
+
+  <script src="js/reveal.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/parallax.js" defer></script>
+  <script src="js/counters.js" defer></script>
+  <script src="js/form.js" defer></script>
+  <script src="js/actionbar.js" defer></script>
+</body>
+</html>
