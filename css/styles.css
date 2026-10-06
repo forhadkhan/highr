@@ -194,6 +194,7 @@
   .icon-check-circle { --icon: url('../assets/icons/check-circle.svg'); }
   .icon-chevron-left { --icon: url('../assets/icons/chevron-left.svg'); }
   .icon-chevron-right { --icon: url('../assets/icons/chevron-right.svg'); }
+  .icon-chevron-up { --icon: url('../assets/icons/chevron-up.svg'); }
   .icon-asterisk { --icon: url('../assets/icons/asterisk.svg'); }
   .icon-x { --icon: url('../assets/icons/x.svg'); }
   .icon-instagram { --icon: url('../assets/icons/instagram.svg'); }
@@ -377,6 +378,7 @@
     position: relative;
     z-index: 1;
     overflow: hidden;
+    width: 100%;
     aspect-ratio: 1500 / 586;
     min-height: 220px;
     background: var(--color-smoke);
@@ -613,13 +615,6 @@
     width: 100%;
     object-fit: cover;
   }
-  .social__cta {
-    position: absolute;
-    inset: 50% auto auto 50%;
-    z-index: 2;
-    transform: translate(-50%, -50%);
-  }
-  .social__cta .btn { white-space: nowrap; }
 
   /* ---------- Footer & contact form ---------- */
   .site-footer {
