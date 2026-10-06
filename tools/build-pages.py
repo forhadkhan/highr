@@ -64,7 +64,7 @@ def seo_index(src):
 def seo_project(p):
     kind = "GatedResidenceCommunity" if "Villas" in p["type"] else "ApartmentComplex"
     locality, region = [x.strip() for x in p["city"].split(",")]
-    data = {"@type": kind, "name": p["name"], "url": f'{SITE_URL}/{p["slug"]}.html',
+    data = {"@type": kind, "name": p["name"], "url": f'{SITE_URL}/{p["slug"]}',
             "description": p["tagline"], "image": f'{SITE_URL}/assets/images/projects/{p["image"]}',
             "address": {"@type": "PostalAddress", "addressLocality": locality, "addressRegion": region, "addressCountry": "US"},
             "geo": {"@type": "GeoCoordinates", "latitude": p["coords"][0], "longitude": p["coords"][1]},
@@ -78,13 +78,13 @@ def seo_project(p):
 
 
 def seo_legal(page):
-    url = f'{SITE_URL}/{page["slug"]}.html'
+    url = f'{SITE_URL}/{page["slug"]}'
     return "\n  ".join(([NOINDEX] if DEMO else []) + [f'<link rel="canonical" href="{url}">', f'<meta property="og:url" content="{url}">'])
 
 
 def sitemap():
-    pages = ["index.html"] + [f'{p["slug"]}.html' for p in PROJECTS] + [f'{x["slug"]}.html' for x in legal.PAGES]
-    urls = "".join(f"  <url><loc>{SITE_URL}/{'' if u == 'index.html' else u}</loc></url>\n" for u in pages)
+    pages = [""] + [p["slug"] for p in PROJECTS] + [x["slug"] for x in legal.PAGES]
+    urls = "".join(f"  <url><loc>{SITE_URL}/{u}</loc></url>\n" for u in pages)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n'
 
 
@@ -113,7 +113,7 @@ def card(p, i):
                 </div>
                 <div class="flex flex-col gap-4 md:gap-6">
                   <p class="flex items-center gap-3 text-body-lg">{status}</p>
-                  <h3 class="text-h3"><a href="{p["slug"]}.html" class="card-link">{p["name"]}</a></h3>
+                  <h3 class="text-h3"><a href="{p["slug"]}" class="card-link">{p["name"]}</a></h3>
                   <p class="max-w-[607px] text-ink-700">{p["card"]}</p>
                 </div>
                 <ul class="mt-auto flex flex-wrap items-center gap-x-8 gap-y-3 text-body-lg">
@@ -155,10 +155,10 @@ def layout_parts(src):
     footer = grab(src, '<footer id="contact"', "</footer>")
     actionbar = grab(src, '<nav class="actionbar"', "</nav>")
     tailwind = grab(src, "<!-- Compiled Tailwind", 'tailwind.css">')
-    # Subpage links: sections of the home page get an index.html prefix; #contact stays local.
-    header = header.replace('href="#top"', 'href="index.html"').replace('aria-label="Highr, back to top"', 'aria-label="Highr, home"')
-    header = re.sub(r'href="#(projects|about|process|testimonial|faq|visit)"', r'href="index.html#\1"', header)
-    footer = footer.replace('<a href="#top" aria-label="Highr, back to top" data-reveal>', '<a href="index.html" aria-label="Highr, home" data-reveal>')
+    # Subpage links: sections of the home page get a ./ prefix; #contact stays local.
+    header = header.replace('href="#top"', 'href="./"').replace('aria-label="Highr, back to top"', 'aria-label="Highr, home"')
+    header = re.sub(r'href="#(projects|about|process|testimonial|faq|visit)"', r'href="./#\1"', header)
+    footer = footer.replace('<a href="#top" aria-label="Highr, back to top" data-reveal>', '<a href="./" aria-label="Highr, home" data-reveal>')
     return header, footer, actionbar, tailwind
 
 
@@ -271,7 +271,7 @@ def project_page(p, parts, others):
 ''' for i, (name, state, when) in enumerate(p["milestones"]))
     other_cards = "".join(
         f'''          <li data-reveal data-reveal-delay="{i * 100}">
-            <a href="{o["slug"]}.html" class="other-card">
+            <a href="{o["slug"]}" class="other-card">
               <div class="project-media"><img src="assets/images/projects/{o["image"]}" alt="{escape(o["alt"])}" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover"></div>
               <span class="mt-5 flex flex-col gap-1.5">
                 <span class="text-h4">{o["name"]}</span>
@@ -380,7 +380,7 @@ def project_page(p, parts, others):
         <div class="flex flex-col items-start gap-6 md:gap-8">
           <nav class="crumbs" aria-label="Breadcrumb" data-reveal="fade">
             <ol>
-              <li><a href="index.html#projects">Communities</a></li>
+              <li><a href="./#projects">Communities</a></li>
               <li>{icon("chevron-right")}</li>
               <li aria-current="page">{p["name"]}</li>
             </ol>

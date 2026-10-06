@@ -1,7 +1,7 @@
 # Highr
 
 Marketing site for Highr Real Estate, Inc., a US developer of new-build homes. Plain HTML, CSS and JS
-plus a compiled Tailwind stylesheet. It runs from `index.html` over `file://` or any static server;
+plus a compiled Tailwind stylesheet. It needs a static server that maps `/page` to `page.html` (GitHub Pages and `tools/serve.py` do);
 Node is needed only to rebuild the Tailwind CSS.
 
 **Demo site.** Highr is a fictional company. Live at https://forhadkhan.github.io/highr/ (GitHub Pages,
@@ -11,8 +11,12 @@ and the footer says so.
 ## Run
 
 ```bash
-python3 -m http.server 8000
+python3 tools/serve.py 8000
 ```
+
+Links use short URLs (`/privacy`, `/skyline-haven`, `./` for the home page), as GitHub Pages serves them. Use
+`tools/serve.py` locally, which maps them to the `.html` files. Opening the files straight from disk
+(`file://`) no longer works for links between pages.
 
 ## Pages
 
