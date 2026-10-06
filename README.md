@@ -39,5 +39,5 @@ assets/
   placeholders. Replace them in the footer.
 - **Tailwind Play CDN** compiles in the browser and is meant for development. For production,
   swap it for the Tailwind CLI build (the `@theme` block in `index.html` moves into your CSS).
-- **Testimonials** autoplay every 5 s (`data-autoplay` on the slider; remove it to turn off) and pause on hover, focus, drag and off screen.
+- **Testimonials** loop infinitely and autoplay every 5 s (`data-autoplay` on the slider; remove it to turn off) and pause on hover, focus, drag and off screen.
 - **Motion** respects `prefers-reduced-motion`; content stays visible without JavaScript.

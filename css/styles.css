@@ -483,7 +483,8 @@
   @media (max-width: 1023.98px) { .slider { --slide-w: 520px; } }
   @media (max-width: 767.98px) { .slider { --slide-w: 456px; --slide-gap: 32px; } }
   @media (max-width: 559.98px) { .slider { --slide-w: 100%; --slide-gap: 20px; } }
-  .slider__viewport { overflow: visible; touch-action: pan-y; cursor: grab; user-select: none; }
+  /* clip the left edge only, so looped slides never peek in from the gutter */
+  .slider__viewport { overflow: visible; clip-path: inset(-100vh -100vw -100vh 0); touch-action: pan-y; cursor: grab; user-select: none; }
   .slider__viewport.is-dragging { cursor: grabbing; }
   .slider__track {
     display: flex;
@@ -518,8 +519,7 @@
   }
   .slider__btn--prev { width: 64px; border-radius: 100px 0 0 100px; }
   .slider__btn--next { width: 64px; border-radius: 0 100px 100px 0; }
-  .slider__btn:hover:not(:disabled) { color: var(--color-ink); }
-  .slider__btn:disabled { opacity: 0.3; cursor: default; }
+  .slider__btn:hover { color: var(--color-ink); }
   .slider__divider { width: 1px; height: 24px; background: var(--color-ink-100); }
 
   /* ---------- Team ---------- */

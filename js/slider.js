@@ -1,6 +1,8 @@
 /**
- * Testimonial slider: autoplay, prev/next buttons, drag/swipe, arrow keys.
- * Buttons disable at either end; autoplay loops back to the first slide.
+ * Testimonial slider: infinite loop, autoplay, prev/next buttons, drag/swipe, arrow keys.
+ *
+ * The slides are cloned before and after the real ones; once a move ends on a clone the track
+ * jumps (without animation) to the identical real slide, so the loop never shows a seam.
  * Autoplay (data-autoplay="5000" ms) pauses on hover, focus, drag, a hidden tab and when the
  * slider is off screen, and is off with prefers-reduced-motion.
  */
@@ -12,40 +14,72 @@
 
   var viewport = root.querySelector('.slider__viewport');
   var track = root.querySelector('.slider__track');
-  var slides = Array.prototype.slice.call(track.children);
+  var originals = Array.prototype.slice.call(track.children);
+  var count = originals.length;
   var prev = root.querySelector('[data-slider-prev]');
   var next = root.querySelector('[data-slider-next]');
-  var index = 0;
-  var drag = null;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var drag = null;
 
-  function maxIndex() { return slides.length - 1; }
+  /* ---------- Clones: [before][real][after]; `pos` indexes the whole list ---------- */
+  function clones() {
+    return originals.map(function (slide) {
+      var copy = slide.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      copy.setAttribute('inert', '');
+      copy.removeAttribute('role');
+      copy.removeAttribute('aria-roledescription');
+      copy.removeAttribute('aria-label');
+      return copy;
+    });
+  }
+  clones().forEach(function (copy) { track.insertBefore(copy, originals[0]); });
+  clones().forEach(function (copy) { track.appendChild(copy); });
+
+  var slides = Array.prototype.slice.call(track.children);
+  var pos = count; // first real slide
 
   function offsetFor(i) { return slides[i].offsetLeft; }
 
   function render() {
-    track.style.transform = 'translate3d(' + -offsetFor(index) + 'px,0,0)';
-    slides.forEach(function (slide, i) { slide.classList.toggle('is-active', i === index); });
-    prev.disabled = index === 0;
-    next.disabled = index === maxIndex();
+    track.style.transform = 'translate3d(' + -offsetFor(pos) + 'px,0,0)';
+    slides.forEach(function (slide, i) { slide.classList.toggle('is-active', i === pos); });
+  }
+
+  /* Jump from a clone to its real twin, with no animation. */
+  function normalize() {
+    if (pos >= count && pos < count * 2) return;
+    pos = ((pos % count) + count) % count + count;
+    track.classList.add('is-dragging');
+    render();
+    void track.offsetWidth;
+    track.classList.remove('is-dragging');
   }
 
   function go(i) {
-    index = Math.max(0, Math.min(maxIndex(), i));
+    pos = Math.max(0, Math.min(slides.length - 1, i));
     render();
+    if (reduceMotion) normalize();
     restart();
   }
+
+  track.addEventListener('transitionend', function (e) {
+    if (e.target === track && e.propertyName === 'transform') normalize();
+  });
+
+  prev.addEventListener('click', function () { go(pos - 1); });
+  next.addEventListener('click', function () { go(pos + 1); });
+
+  root.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(pos - 1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); go(pos + 1); }
+  });
 
   /* ---------- Autoplay ---------- */
   var delay = parseInt(root.getAttribute('data-autoplay'), 10) || 0;
   var timer = null;
   var onScreen = false;
   var held = false; // hover, focus or drag
-
-  function tick() {
-    index = index >= maxIndex() ? 0 : index + 1;
-    render();
-  }
 
   function stop() {
     window.clearInterval(timer);
@@ -55,21 +89,13 @@
   function restart() {
     stop();
     if (!delay || reduceMotion || held || !onScreen || document.hidden) return;
-    timer = window.setInterval(tick, delay);
+    timer = window.setInterval(function () { go(pos + 1); }, delay);
   }
 
   function hold(value) {
     held = value;
     restart();
   }
-
-  prev.addEventListener('click', function () { go(index - 1); });
-  next.addEventListener('click', function () { go(index + 1); });
-
-  root.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft') { e.preventDefault(); go(index - 1); }
-    else if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1); }
-  });
 
   root.addEventListener('mouseenter', function () { hold(true); });
   root.addEventListener('mouseleave', function () { hold(false); });
@@ -87,9 +113,10 @@
   /* ---------- Drag / swipe ---------- */
   viewport.addEventListener('pointerdown', function (e) {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
+    normalize(); // a swipe may start while the previous move is still on a clone
     held = true;
     stop();
-    drag = { x: e.clientX, y: e.clientY, dx: 0, base: -offsetFor(index), time: Date.now(), locked: false };
+    drag = { x: e.clientX, y: e.clientY, dx: 0, base: -offsetFor(pos), time: Date.now(), locked: false };
   });
 
   viewport.addEventListener('pointermove', function (e) {
@@ -105,12 +132,7 @@
       viewport.classList.add('is-dragging');
     }
     drag.dx = dx;
-    var min = -offsetFor(maxIndex());
-    var pos = drag.base + dx;
-    // resist pulling past either end
-    if (pos > 0) pos *= 0.35;
-    else if (pos < min) pos = min + (pos - min) * 0.35;
-    track.style.transform = 'translate3d(' + pos + 'px,0,0)';
+    track.style.transform = 'translate3d(' + (drag.base + dx) + 'px,0,0)';
   });
 
   function endDrag() {
@@ -123,9 +145,9 @@
     if (!moved) { restart(); return; }
     track.classList.remove('is-dragging');
     viewport.classList.remove('is-dragging');
-    var threshold = fast ? 30 : slides[index].offsetWidth / 4;
-    if (dx < -threshold) go(index + 1);
-    else if (dx > threshold) go(index - 1);
+    var threshold = fast ? 30 : slides[pos].offsetWidth / 4;
+    if (dx < -threshold) go(pos + 1);
+    else if (dx > threshold) go(pos - 1);
     else { render(); restart(); }
   }
 
