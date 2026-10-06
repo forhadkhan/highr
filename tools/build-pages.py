@@ -90,6 +90,11 @@ def robots():
     return f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n"
 
 
+def beds_label(beds):
+    """'0–3 beds' -> 'Studio–3 beds' (a 0-bedroom home is a studio)."""
+    return beds.replace("0–", "Studio–", 1) if beds.startswith("0–") else beds
+
+
 def card(p, i):
     ongoing = p["status"] == "ongoing"
     if ongoing:
@@ -113,10 +118,12 @@ def card(p, i):
                   <li class="flex items-center gap-3"><i class="icon icon-building text-ink-700"></i>{p["type"]}</li>
                   <li class="flex items-center gap-3"><i class="icon icon-map-pin text-ink-700"></i>{p["city"]}</li>
                 </ul>
-                <p class="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-ink-100 pt-5 text-body-lg">
-                  <span>From <strong class="font-medium">{p["price"]}</strong> · {p["beds"]} · {p["size"]}</span>
-                  <span class="card-more" aria-hidden="true">View details <i class="icon icon-chevron-right"></i></span>
-                </p>
+                <dl class="spec">
+                  <div class="spec__item"><dt>{icon("price-tag")}From</dt><dd>{p["price"]}</dd></div>
+                  <div class="spec__item"><dt>{icon("bed")}Bedrooms</dt><dd>{beds_label(p["beds"])}</dd></div>
+                  <div class="spec__item"><dt>{icon("ruler")}Area</dt><dd>{p["size"]}</dd></div>
+                </dl>
+                <p class="card-more" aria-hidden="true">View details {icon("chevron-right")}</p>
               </article>
             </li>
 '''
@@ -151,6 +158,60 @@ def layout_parts(src):
     header = re.sub(r'href="#(projects|about|process|testimonial|faq|visit)"', r'href="index.html#\1"', header)
     footer = footer.replace('<a href="#top" aria-label="Highr, back to top" data-reveal>', '<a href="index.html" aria-label="Highr, home" data-reveal>')
     return header, footer, actionbar, tailwind
+
+
+PLAN_DIR = ROOT / "assets" / "plans"
+
+
+def plan_svg(name, beds, baths):
+    """Schematic room layout for one home type. Illustrative only, not to scale."""
+    beds = int(beds)
+    full = int(float(baths))
+    rooms = ["Studio" if beds == 0 else f"Bedroom {i}" for i in range(1, beds + 1)] if beds else ["Sleeping"]
+    wet = ["Bath"] * max(full, 1) + (["Powder"] if float(baths) % 1 else [])
+    right = rooms + wet
+    ncols = -(-len(right) // 4)
+    per = -(-len(right) // ncols)
+    cols = [right[i:i + per] for i in range(0, len(right), per)]
+    x0, y0, w, h = 16, 16, 368, 268
+    left_w = round(w * (0.42 if len(cols) < 2 else 0.34))
+    out = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" data-generated="true">',
+           f'<title>{escape(name)} layout</title><rect width="400" height="300" fill="#f4f4f4"/>',
+           f'<g fill="#fff" stroke="#111" stroke-width="2" font-family="Poppins, Arial, sans-serif" font-size="11" text-anchor="middle">']
+
+    def cell(label, x, y, cw, ch):
+        out.append(f'<rect x="{x}" y="{y}" width="{cw}" height="{ch}"/>'
+                   f'<text x="{x + cw / 2:.0f}" y="{y + ch / 2 + 4:.0f}" fill="#444" stroke="none">{escape(label)}</text>')
+
+    half = round(h * 0.58)
+    cell("Living / Dining", x0, y0, left_w, half)
+    cell("Kitchen", x0, y0 + half, left_w, h - half)
+    cw = (w - left_w) / len(cols)
+    for ci, col in enumerate(cols):
+        x = round(x0 + left_w + ci * cw)
+        wd = round(x0 + left_w + (ci + 1) * cw) - x
+        weights = [0.55 if r in ("Bath", "Powder") else 1 for r in col]
+        total, y = sum(weights), y0
+        for r, wt in zip(col, weights):
+            ch = round(h * wt / total)
+            cell(r, x, y, wd, ch)
+            y += ch
+    out.append('</g></svg>')
+    return "".join(out)
+
+
+def plan_asset(slug, n, name, beds, baths):
+    """Path of the plan image. A real file named assets/plans/<slug>-<n>.(png|webp|jpg|svg) wins;
+    otherwise an illustrative SVG is generated. Returns (relative path, is_generated)."""
+    PLAN_DIR.mkdir(parents=True, exist_ok=True)
+    base = f"{slug}-{n}"
+    for ext in ("png", "webp", "jpg", "svg"):
+        f = PLAN_DIR / f"{base}.{ext}"
+        if f.exists() and 'data-generated' not in f.read_text(errors="ignore")[:400]:
+            return f"assets/plans/{f.name}", False
+    f = PLAN_DIR / f"{base}.svg"
+    f.write_text(plan_svg(name, beds, baths))
+    return f"assets/plans/{f.name}", True
 
 
 def icon(name, cls=""):
@@ -217,6 +278,52 @@ def project_page(p, parts, others):
             </a>
           </li>
 ''' for i, o in enumerate(others))
+
+    plan_items, any_generated = "", False
+    for n, (t, b, ba, sq, pr, av) in enumerate(p["types"], 1):
+        src, gen = plan_asset(p["slug"], n, t, b, ba)
+        any_generated = any_generated or gen
+        kind = "Schematic floor plan" if gen else "Floor plan"
+        bed_txt = "Studio" if str(b) == "0" else f"{b} bed"
+        plan_items += f'''          <li data-reveal data-reveal-delay="{(n - 1) % 2 * 100}">
+            <figure class="plan">
+              <div class="plan__img"><img src="{src}" alt="{kind} of the {escape(t)}: {bed_txt}, {ba} bath, {sq} sq ft" width="400" height="300" loading="lazy"></div>
+              <figcaption><span class="text-h4">{t}</span><span class="text-ink-700">{bed_txt} · {ba} bath · {sq} sq ft</span></figcaption>
+            </figure>
+          </li>
+'''
+    plan_cols = "xl:grid-cols-4" if len(p["types"]) == 4 else "xl:grid-cols-3"
+    plan_note = ("Illustrative layouts, not to scale. Dimensioned plans for each home are sent by your advisor."
+                 if any_generated else "Dimensions and finishes vary by home. Your advisor sends the full plan set.")
+    plans_html = f'''    <section id="plans" class="section-y bg-white" aria-labelledby="plans-title">
+      <div class="container-page">
+        <div class="flex flex-col gap-6">
+          <p class="text-body-lg" data-reveal>Layouts</p>
+          <h2 id="plans-title" class="max-w-[640px] text-h2" data-reveal data-split data-reveal-delay="80">Floor plans</h2>
+        </div>
+        <ul class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 {plan_cols} md:mt-[60px]">
+{plan_items}        </ul>
+        <p class="mt-6 text-sm text-ink-700">{plan_note}</p>
+      </div>
+    </section>
+
+'''
+
+    gallery = p.get("gallery", [])
+    gallery_html = ""
+    if len(gallery) >= 2:
+        shots = "".join(
+            f'''          <li class="gallery-grid__item" data-reveal data-reveal-delay="{i % 3 * 80}"><img src="assets/images/projects/{g}" alt="{escape(alt)}" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover"></li>
+''' for i, (g, alt) in enumerate(gallery))
+        gallery_html = f'''    <section id="gallery" class="bg-white pb-[var(--section-y)]" aria-labelledby="gallery-title">
+      <div class="container-page">
+        <h2 id="gallery-title" class="text-h2" data-reveal data-split>Gallery</h2>
+        <ul class="gallery-grid mt-10 md:mt-[60px]">
+{shots}        </ul>
+      </div>
+    </section>
+
+'''
 
     if ongoing:
         progress_head = f'''<p class="text-h1 leading-none" data-count="{p["progress"]}" data-prefix="" data-suffix="%" data-decimals="0">{p["progress"]}%</p>
@@ -319,7 +426,7 @@ def project_page(p, parts, others):
       </div>
     </section>
 
-    <section id="homes" class="section-y bg-smoke" aria-labelledby="types-title">
+{gallery_html}    <section id="homes" class="section-y bg-smoke" aria-labelledby="types-title">
       <div class="container-page">
         <div class="flex flex-col gap-6">
           <p class="text-body-lg" data-reveal>Pricing</p>
@@ -336,14 +443,14 @@ def project_page(p, parts, others):
         </div>
         <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
           <a href="#contact" class="btn">
-            <span class="btn__label"><span>Request floor plans</span><span aria-hidden="true">Request floor plans</span></span>
+            <span class="btn__label"><span>Request detailed plans</span><span aria-hidden="true">Request detailed plans</span></span>
           </a>
-          <p class="max-w-[460px] text-sm text-ink-700">Prices are starting prices and may change. Floor plans, finish packages and current availability are sent by your advisor.</p>
+          <p class="max-w-[460px] text-sm text-ink-700">Prices are starting prices and may change. Finish packages and current availability are sent by your advisor.</p>
         </div>
       </div>
     </section>
 
-    <section id="progress" class="section-y bg-white" aria-labelledby="progress-title">
+{plans_html}    <section id="progress" class="section-y bg-white" aria-labelledby="progress-title">
       <div class="container-page">
         <div class="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_0.85fr] lg:gap-[100px]">
           <div class="flex flex-col items-start gap-6">

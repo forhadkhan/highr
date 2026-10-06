@@ -56,6 +56,12 @@ assets/             images, logos, icons (SVG, used as CSS masks via .icon-*), f
   ```
 
   Run the generator first if you changed a generated page, so the build sees its classes.
+- **Floor plans and gallery:** each home type gets a plan in `assets/plans/<slug>-<n>.svg`, generated
+  as a schematic layout (labelled "illustrative, not to scale" on the page). To use a real plan, save it as
+  `assets/plans/<slug>-<n>.png` (or `.webp`, `.jpg`, or your own `.svg`); the generator keeps real files and only
+  overwrites the ones it made. `n` is the row number in `types` (1 = first). A community page shows a Gallery
+  section when its entry in `tools/projects.py` has `"gallery": [("file.webp", "alt text"), ...]` with at least
+  two images placed in `assets/images/projects/`.
 - **Stats** count up from `data-count`, `data-prefix`, `data-suffix` and `data-decimals`.
 - **Icons:** add an SVG to `assets/icons/` and a matching `.icon-*` rule in `css/styles.css`.
 - **Structured data:** Organization and FAQPage (built from the FAQ markup) on the home page,
@@ -70,8 +76,8 @@ All of this is made up for the template:
   (10-year structural warranty, fixed-price contracts).
 - Every number in `tools/projects.py`: prices, sizes, availability, progress, dates, nearby travel times,
   coordinates and unit counts. Stats, reviews and testimonials on the home page.
-- Photos: each community has one image, so there is no gallery or floor-plan drawings; the pages offer
-  "Request floor plans" instead. Add real photos and plans when you have them.
+- Photos and plans: each community has one image, so no Gallery section shows, and the floor plans are
+  generated schematics. Add real photos (`gallery`) and plans (`assets/plans/`), see Editing.
 - `https://www.highr.example` in the SEO output.
 - **Contact form:** it validates and shows a success message but sends nothing until you set
   `data-endpoint="https://…"` on the `<form data-contact-form>`; it then POSTs the fields as JSON.
