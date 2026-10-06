@@ -590,31 +590,39 @@
     overflow: hidden;
     background: #000;
   }
+  /* Under 768px the photos form a 2 x 3 grid; from 768px up, three drifting columns of two.
+     Either way all six photos are always on screen. */
   .social__wrap {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 8px;
     width: 100%;
     height: 100%;
   }
-  .social__col {
-    display: flex;
-    flex: none;
-    flex-direction: column;
-    gap: 12px;
-    width: 100vw;
-    height: calc(100% + 48px);
-    margin-block: -24px;
-    will-change: transform;
-  }
-  @media (min-width: 560px) { .social__col { width: 50vw; } }
-  @media (min-width: 768px) { .social__col { width: 40vw; } }
-  @media (min-width: 1024px) { .social__col { width: 33.333vw; } }
+  .social__col { display: contents; }
   .social__col img {
-    flex: 1;
-    min-height: 0;
     width: 100%;
+    height: 100%;
+    min-height: 0;
     object-fit: cover;
+  }
+  @media (min-width: 768px) {
+    .social__wrap {
+      display: flex;
+      gap: 12px;
+    }
+    .social__col {
+      display: flex;
+      flex: 1 1 0;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+      height: calc(100% + 48px);
+      margin-block: -24px;
+      will-change: transform;
+    }
+    .social__col img { flex: 1; height: auto; }
   }
 
   /* ---------- Footer & contact form ---------- */
