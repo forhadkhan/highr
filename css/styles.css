@@ -399,6 +399,7 @@
     .hero-media__img { scale: 1; }
     .nav-panel, .nav-panel li { transition: none; }
     .project-item.filter-in { animation: none; }
+    .slider__track, .slider__slide { transition: none; }
   }
 
   /* ---------- Project tabs ---------- */
@@ -468,6 +469,50 @@
   }
   @media (min-width: 1024px) { .about-media { aspect-ratio: auto; min-height: 560px; } }
   .about-media img { scale: 1.12; }
+
+  /* ---------- Testimonial slider ---------- */
+  .slider { --slide-w: 670px; --slide-gap: 60px; outline-offset: 8px; }
+  @media (max-width: 1023.98px) { .slider { --slide-w: 520px; } }
+  @media (max-width: 767.98px) { .slider { --slide-w: 456px; --slide-gap: 32px; } }
+  @media (max-width: 559.98px) { .slider { --slide-w: 100%; --slide-gap: 20px; } }
+  .slider__viewport { overflow: visible; touch-action: pan-y; cursor: grab; user-select: none; }
+  .slider__viewport.is-dragging { cursor: grabbing; }
+  .slider__track {
+    display: flex;
+    gap: var(--slide-gap);
+    transition: transform 0.8s var(--ease-out);
+    will-change: transform;
+  }
+  .slider__track.is-dragging { transition: none; }
+  .slider__slide {
+    flex: none;
+    width: min(var(--slide-w), 100%);
+    opacity: 0.35;
+    transition: opacity 0.6s;
+  }
+  .slider__slide.is-active { opacity: 1; }
+  .slider__slide img { -webkit-user-drag: none; pointer-events: none; }
+  .slider__controls {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    margin-top: 48px;
+    border-radius: 100px;
+    background: #fff;
+    color: var(--color-ink-700);
+  }
+  .slider__btn {
+    display: grid;
+    place-items: center;
+    height: 48px;
+    cursor: pointer;
+    transition: color 0.2s, opacity 0.2s;
+  }
+  .slider__btn--prev { width: 64px; border-radius: 100px 0 0 100px; }
+  .slider__btn--next { width: 64px; border-radius: 0 100px 100px 0; }
+  .slider__btn:hover:not(:disabled) { color: var(--color-ink); }
+  .slider__btn:disabled { opacity: 0.3; cursor: default; }
+  .slider__divider { width: 1px; height: 24px; background: var(--color-ink-100); }
 
   /* ---------- Reduced motion: show everything, no movement ---------- */
   @media (prefers-reduced-motion: reduce) {

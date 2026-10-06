@@ -282,6 +282,86 @@
       </div>
     </section>
 
+    <!-- Testimonials -->
+    <section id="testimonial" class="section-y overflow-hidden bg-smoke" aria-labelledby="testimonial-title">
+      <div class="container-page">
+        <div class="flex flex-col items-center gap-6 text-center">
+          <div class="flex items-center gap-2 text-body-lg leading-none" data-reveal="fade">
+            <span>Excellent</span>
+            <span class="stars" style="--star: 15px" role="img" aria-label="5 out of 5 stars">
+              <i class="icon icon-star"></i><i class="icon icon-star"></i><i class="icon icon-star"></i><i class="icon icon-star"></i><i class="icon icon-star"></i>
+            </span>
+            <span>4.8/5</span>
+          </div>
+          <h2 id="testimonial-title" class="text-h2" data-reveal data-split data-reveal-delay="100">What our clients say</h2>
+        </div>
+
+        <div class="slider mt-12 md:mt-[60px]" data-slider data-reveal data-reveal-delay="200" role="region" aria-roledescription="carousel" aria-label="Client testimonials" tabindex="0">
+          <div class="slider__viewport">
+            <ul class="slider__track">
+              <li class="slider__slide" role="group" aria-roledescription="slide" aria-label="1 of 4">
+                <figure class="flex flex-col gap-8">
+                  <blockquote class="text-h4">“From the moment we stepped in, we knew this wasn’t just another apartment — it felt like home. The attention to detail, natural light, and overall experience were beyond expectations.”</blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <img src="assets/images/testimonial-user1.png" alt="Portrait of Olivia Bennett" width="50" height="50" loading="lazy" class="size-[45px] rounded-full object-cover grayscale md:size-[50px]">
+                    <span class="flex flex-col gap-1.5">
+                      <span>Olivia Bennett</span>
+                      <span class="text-ink-700">London, UK · Resident at Skyline Haven</span>
+                    </span>
+                  </figcaption>
+                </figure>
+              </li>
+              <li class="slider__slide" role="group" aria-roledescription="slide" aria-label="2 of 4">
+                <figure class="flex flex-col gap-8">
+                  <blockquote class="text-h4">“Their team didn’t just build a house; they built a lifestyle. The blend of modern architecture and peaceful surroundings is something we truly cherish.”</blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <img src="assets/images/testimonial-user2.png" alt="Portrait of Ethan Morales" width="50" height="50" loading="lazy" class="size-[45px] rounded-full object-cover grayscale md:size-[50px]">
+                    <span class="flex flex-col gap-1.5">
+                      <span>Ethan Morales</span>
+                      <span class="text-ink-700">Vancouver, Canada · Homeowner at Vista Gardens</span>
+                    </span>
+                  </figcaption>
+                </figure>
+              </li>
+              <li class="slider__slide" role="group" aria-roledescription="slide" aria-label="3 of 4">
+                <figure class="flex flex-col gap-8">
+                  <blockquote class="text-h4">“Every step of the process was transparent and professional. What impressed us most was how they prioritized sustainability without compromising on design.”</blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <img src="assets/images/testimonial-user3.png" alt="Portrait of Sofia Rossi" width="50" height="50" loading="lazy" class="size-[45px] rounded-full object-cover grayscale md:size-[50px]">
+                    <span class="flex flex-col gap-1.5">
+                      <span>Sofia Rossi</span>
+                      <span class="text-ink-700">Milan, Italy · Investor at Silverleaf Towers</span>
+                    </span>
+                  </figcaption>
+                </figure>
+              </li>
+              <li class="slider__slide" role="group" aria-roledescription="slide" aria-label="4 of 4">
+                <figure class="flex flex-col gap-8">
+                  <blockquote class="text-h4">“I’ve worked with several developers, but none matched this level of communication and design insight. The property turned out exactly as envisioned — maybe better.”</blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <img src="assets/images/testimonial-user4.png" alt="Portrait of Daniel Roberts" width="50" height="50" loading="lazy" class="size-[45px] rounded-full object-cover grayscale md:size-[50px]">
+                    <span class="flex flex-col gap-1.5">
+                      <span>Daniel Roberts</span>
+                      <span class="text-ink-700">Sydney, Australia · Partner Architect</span>
+                    </span>
+                  </figcaption>
+                </figure>
+              </li>
+            </ul>
+          </div>
+          <div class="slider__controls">
+            <button type="button" class="slider__btn slider__btn--prev" aria-label="Previous testimonial" data-slider-prev>
+              <i class="icon icon-chevron-left"></i>
+            </button>
+            <span class="slider__divider" aria-hidden="true"></span>
+            <button type="button" class="slider__btn slider__btn--next" aria-label="Next testimonial" data-slider-next>
+              <i class="icon icon-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- @main -->
   </main>
 
@@ -292,6 +372,7 @@
   <script src="js/parallax.js" defer></script>
   <script src="js/tabs.js" defer></script>
   <script src="js/counters.js" defer></script>
+  <script src="js/slider.js" defer></script>
   <!-- @scripts -->
 </body>
 </html>
