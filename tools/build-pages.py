@@ -21,7 +21,9 @@ import legal  # noqa: E402
 INDEX = ROOT / "index.html"
 SITE_NAME = "Highr"
 PHONE_TEL = "+12125550142"
-SITE_URL = "https://www.highr.example"  # replace with the real domain, then re-run this script
+SITE_URL = "https://forhadkhan.github.io/highr"  # GitHub Pages project URL; use the real domain, then re-run this script
+DEMO = True  # demo site: ask search engines not to index the made-up company
+NOINDEX = '<meta name="robots" content="noindex, nofollow">'
 ORG = {
     "@type": "Organization",
     "@id": SITE_URL + "/#organization",
@@ -51,7 +53,7 @@ def faq_entities(src):
 
 
 def seo_index(src):
-    return "\n  ".join([
+    return "\n  ".join(([NOINDEX] if DEMO else []) + [
         f'<link rel="canonical" href="{SITE_URL}/">',
         f'<meta property="og:url" content="{SITE_URL}/">',
         ld({**ORG}),
@@ -71,13 +73,13 @@ def seo_project(p):
     crumbs = {"@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Communities", "item": SITE_URL + "/#projects"},
         {"@type": "ListItem", "position": 2, "name": p["name"], "item": data["url"]}]}
-    return "\n  ".join([f'<link rel="canonical" href="{data["url"]}">', f'<meta property="og:url" content="{data["url"]}">',
+    return "\n  ".join(([NOINDEX] if DEMO else []) + [f'<link rel="canonical" href="{data["url"]}">', f'<meta property="og:url" content="{data["url"]}">',
                         ld(data), ld(crumbs)])
 
 
 def seo_legal(page):
     url = f'{SITE_URL}/{page["slug"]}.html'
-    return "\n  ".join([f'<link rel="canonical" href="{url}">', f'<meta property="og:url" content="{url}">'])
+    return "\n  ".join(([NOINDEX] if DEMO else []) + [f'<link rel="canonical" href="{url}">', f'<meta property="og:url" content="{url}">'])
 
 
 def sitemap():

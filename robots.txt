@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.highr.example/sitemap.xml
+Sitemap: https://forhadkhan.github.io/highr/sitemap.xml

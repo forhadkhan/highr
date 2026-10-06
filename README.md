@@ -4,6 +4,10 @@ Marketing site for Highr Real Estate, Inc., a US developer of new-build homes. P
 plus a compiled Tailwind stylesheet. It runs from `index.html` over `file://` or any static server;
 Node is needed only to rebuild the Tailwind CSS.
 
+**Demo site.** Highr is a fictional company. Live at https://forhadkhan.github.io/highr/ (GitHub Pages,
+branch `main`, root). Every page carries `noindex` (set `DEMO = False` in `tools/build-pages.py` to remove it)
+and the footer says so.
+
 ## Run
 
 ```bash
@@ -81,7 +85,7 @@ All of this is made up for the template:
   coordinates and unit counts. Stats, reviews and testimonials on the home page.
 - Photos and plans: each community has one image, so no Gallery section shows, and the floor plans are
   generated schematics. Add real photos (`gallery`) and plans (`assets/plans/`), see Editing.
-- `https://www.highr.example` in the SEO output.
+- `SITE_URL` in `tools/build-pages.py` (currently the GitHub Pages URL), and the og:image URL in `index.html`.
 - **Contact form:** it validates and shows a success message but sends nothing until you set
   `data-endpoint="https://…"` on the `<form data-contact-form>`; it then POSTs the fields as JSON.
   The form on a community page preselects that community (`data-interest`), and `?interest=Name` works
