@@ -384,8 +384,10 @@ def project_page(p, parts, others):
             <p class="max-w-[420px] text-ink-700">{p["name"]} was completed in {p["eta"].replace("Completed ", "")} and is lived in today. Homes marked move-in ready can be handed over within weeks of reservation.</p>'''
         progress_title = "Built and lived in"
 
-    title = f'{p["name"]} – {p["type"]} in {p["city"]} | {SITE_NAME}'
-    desc = f'{p["tagline"]} Homes from {p["price"]}. See pricing, home types and location.'
+    title = f'{p["name"]} – {p["type"]} in {p["city"].split(",")[0]}'
+    if len(title) + len(SITE_NAME) + 3 <= 60:
+        title += f' | {SITE_NAME}'  # the brand only when the whole title stays within 60 characters
+    desc = f'{p["tagline"]} Homes from {p["price"]}.'
 
     return f'''<!DOCTYPE html>
 <html lang="en-US" class="scroll-smooth">
