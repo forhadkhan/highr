@@ -52,6 +52,27 @@ def faq_entities(src):
     return out
 
 
+def og_tags(title, desc, image, alt, url, size=(1200, 630)):
+    """Open Graph and Twitter card tags; `image` is an absolute URL."""
+    t, d, a = escape(title), escape(desc), escape(alt)
+    return "\n  ".join([
+        '<meta property="og:type" content="website">',
+        f'<meta property="og:site_name" content="{SITE_NAME}">',
+        '<meta property="og:locale" content="en_US">',
+        f'<meta property="og:title" content="{t}">',
+        f'<meta property="og:description" content="{d}">',
+        f'<meta property="og:url" content="{url}">',
+        f'<meta property="og:image" content="{image}">',
+        f'<meta property="og:image:width" content="{size[0]}">',
+        f'<meta property="og:image:height" content="{size[1]}">',
+        f'<meta property="og:image:alt" content="{a}">',
+        '<meta name="twitter:card" content="summary_large_image">',
+        f'<meta name="twitter:title" content="{t}">',
+        f'<meta name="twitter:description" content="{d}">',
+        f'<meta name="twitter:image" content="{image}">',
+        f'<meta name="twitter:image:alt" content="{a}">'])
+
+
 def seo_index(src):
     return "\n  ".join(([NOINDEX] if DEMO else []) + [
         f'<link rel="canonical" href="{SITE_URL}/">',
@@ -73,13 +94,13 @@ def seo_project(p):
     crumbs = {"@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Communities", "item": SITE_URL + "/#projects"},
         {"@type": "ListItem", "position": 2, "name": p["name"], "item": data["url"]}]}
-    return "\n  ".join(([NOINDEX] if DEMO else []) + [f'<link rel="canonical" href="{data["url"]}">', f'<meta property="og:url" content="{data["url"]}">',
+    return "\n  ".join(([NOINDEX] if DEMO else []) + [f'<link rel="canonical" href="{data["url"]}">',
                         ld(data), ld(crumbs)])
 
 
 def seo_legal(page):
     url = f'{SITE_URL}/{page["slug"]}'
-    return "\n  ".join(([NOINDEX] if DEMO else []) + [f'<link rel="canonical" href="{url}">', f'<meta property="og:url" content="{url}">'])
+    return "\n  ".join(([NOINDEX] if DEMO else []) + [f'<link rel="canonical" href="{url}">'])
 
 
 def sitemap():
@@ -375,12 +396,7 @@ def project_page(p, parts, others):
   <meta name="description" content="{escape(desc)}">
   <meta name="theme-color" content="#ffffff">
 
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:title" content="{escape(title)}">
-  <meta property="og:description" content="{escape(p["tagline"])}">
-  <meta property="og:image" content="{SITE_URL}/assets/images/og-image.jpg">
-  <meta name="twitter:card" content="summary_large_image">
+  {og_tags(title, p["tagline"], f'{SITE_URL}/assets/images/social/og-{Path(p["image"]).stem}.jpg', f'{p["name"]}, {p["type"]} in {p["city"]}', f'{SITE_URL}/{p["slug"]}')}
   {seo_project(p)}
 
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
@@ -554,6 +570,7 @@ def legal_page(page, parts):
   <title>{escape(title)}</title>
   <meta name="description" content="{escape(page["description"])}">
   <meta name="theme-color" content="#ffffff">
+  {og_tags(title, page["description"], f"{SITE_URL}/assets/images/og-image.jpg", "Highr, new-build homes designed to last", f'{SITE_URL}/{page["slug"]}')}
   {seo_legal(page)}
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">

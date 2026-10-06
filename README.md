@@ -55,7 +55,11 @@ assets/             images, logos, icons (SVG, used as CSS masks via .icon-*), f
   pick up the change.
 - **Legal text:** `tools/legal.py`, then run the generator.
 - **Domain:** set `SITE_URL` in `tools/build-pages.py` and run it. It writes canonical URLs, Open Graph
-  URLs, JSON-LD and `sitemap.xml`. Also change the Open Graph image URL in `index.html`.
+  URLs, JSON-LD and `sitemap.xml`. Also change the Open Graph image URLs in the head of `index.html`.
+- **Share previews (Open Graph and Twitter cards):** the home page tags are written by hand in the head of
+  `index.html`; the community and legal pages get theirs from `og_tags()` in `tools/build-pages.py`. Each community
+  uses its own 1200 x 630 image, `assets/images/social/og-<photo>.jpg`, made by `tools/optimize-images.py`; the home
+  and legal pages use `assets/images/og-image.jpg`. Paste a page URL into a link-preview checker after publishing.
 - **Styles:** Tailwind utility classes live in the markup, theme tokens in `css/tailwind.src.css`.
   After adding classes run:
 
