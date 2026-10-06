@@ -1,6 +1,8 @@
 /**
- * Testimonial slider: prev/next buttons, drag/swipe, arrow keys.
- * Not infinite; buttons disable at either end.
+ * Testimonial slider: autoplay, prev/next buttons, drag/swipe, arrow keys.
+ * Buttons disable at either end; autoplay loops back to the first slide.
+ * Autoplay (data-autoplay="5000" ms) pauses on hover, focus, drag, a hidden tab and when the
+ * slider is off screen, and is off with prefers-reduced-motion.
  */
 (function () {
   'use strict';
@@ -31,6 +33,34 @@
   function go(i) {
     index = Math.max(0, Math.min(maxIndex(), i));
     render();
+    restart();
+  }
+
+  /* ---------- Autoplay ---------- */
+  var delay = parseInt(root.getAttribute('data-autoplay'), 10) || 0;
+  var timer = null;
+  var onScreen = false;
+  var held = false; // hover, focus or drag
+
+  function tick() {
+    index = index >= maxIndex() ? 0 : index + 1;
+    render();
+  }
+
+  function stop() {
+    window.clearInterval(timer);
+    timer = null;
+  }
+
+  function restart() {
+    stop();
+    if (!delay || reduceMotion || held || !onScreen || document.hidden) return;
+    timer = window.setInterval(tick, delay);
+  }
+
+  function hold(value) {
+    held = value;
+    restart();
   }
 
   prev.addEventListener('click', function () { go(index - 1); });
@@ -41,9 +71,24 @@
     else if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1); }
   });
 
+  root.addEventListener('mouseenter', function () { hold(true); });
+  root.addEventListener('mouseleave', function () { hold(false); });
+  root.addEventListener('focusin', function () { hold(true); });
+  root.addEventListener('focusout', function () { hold(false); });
+  document.addEventListener('visibilitychange', restart);
+
+  if (delay && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      onScreen = entries[0].isIntersecting;
+      restart();
+    }, { threshold: 0.3 }).observe(root);
+  }
+
   /* ---------- Drag / swipe ---------- */
   viewport.addEventListener('pointerdown', function (e) {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
+    held = true;
+    stop();
     drag = { x: e.clientX, y: e.clientY, dx: 0, base: -offsetFor(index), time: Date.now(), locked: false };
   });
 
@@ -74,13 +119,14 @@
     var dx = drag.dx;
     var fast = Date.now() - drag.time < 300;
     drag = null;
-    if (!moved) return;
+    held = root.matches(':hover') || root.contains(document.activeElement);
+    if (!moved) { restart(); return; }
     track.classList.remove('is-dragging');
     viewport.classList.remove('is-dragging');
     var threshold = fast ? 30 : slides[index].offsetWidth / 4;
     if (dx < -threshold) go(index + 1);
     else if (dx > threshold) go(index - 1);
-    else render();
+    else { render(); restart(); }
   }
 
   viewport.addEventListener('pointerup', endDrag);
