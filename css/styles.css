@@ -396,7 +396,77 @@
     .site-header, .hero-media, .hero-media__img { animation: none; }
     .hero-media__img { scale: 1; }
     .nav-panel, .nav-panel li { transition: none; }
+    .project-item.filter-in { animation: none; }
   }
+
+  /* ---------- Press logos ---------- */
+  .client-logo {
+    height: 20px;
+    width: auto;
+    opacity: 0.85;
+    transition: opacity 0.3s, transform 0.4s var(--ease-out);
+  }
+  .client-logo:hover { opacity: 1; transform: translateY(-2px); }
+  @media (min-width: 768px) { .client-logo { height: 30px; } }
+
+  /* ---------- Project tabs ---------- */
+  .tabs { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+  .tab {
+    position: relative;
+    padding: 4px 0;
+    font-size: var(--text-body-lg);
+    color: var(--color-ink-500);
+    cursor: pointer;
+    transition: color 0.25s;
+  }
+  .tab::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s var(--ease-out);
+  }
+  .tab:hover { color: var(--color-ink); }
+  .tab[aria-selected='true'] { color: var(--color-ink); }
+  .tab[aria-selected='true']::after { transform: scaleX(1); transform-origin: left; }
+
+  /* ---------- Project cards ---------- */
+  .project-item[hidden] { display: none; }
+  .project-media {
+    overflow: hidden;
+    aspect-ratio: 3 / 2;
+    background: var(--color-smoke);
+  }
+  .project-media img { transition: transform 1s var(--ease-out); }
+  .project-item:hover .project-media img { transform: scale(1.05); }
+  .project-item.filter-in { animation: filter-in 0.6s calc(var(--i, 0) * 90ms) var(--ease-out) both; }
+  @keyframes filter-in {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Status badge: a progress ring for ongoing work, a tick for finished */
+  .status-ring {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background:
+      radial-gradient(closest-side, #fff 68%, transparent 71%),
+      conic-gradient(var(--color-success) calc(var(--p, 0) * 1%), rgb(42 162 46 / 0.12) 0);
+  }
+  .status-ring--done {
+    background: rgb(42 162 46 / 0.12);
+    color: var(--color-success);
+  }
+  .status-ring--done .icon { width: 20px; height: 20px; }
 
   /* ---------- Reduced motion: show everything, no movement ---------- */
   @media (prefers-reduced-motion: reduce) {

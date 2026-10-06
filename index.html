@@ -126,6 +126,102 @@
       <img src="assets/images/hero-background.webp" alt="Two modern glass residential towers rising above green treetops at dusk" width="1500" height="586" fetchpriority="high" class="hero-media__img" data-parallax="0.12">
     </div>
 
+    <!-- Press logos -->
+    <section class="relative z-[1] bg-white py-14 md:py-20" aria-label="Featured in">
+      <div class="container-page">
+        <div class="flex flex-col items-center gap-8 text-center">
+          <p class="text-ink-700" data-reveal>Featured in and trusted by leading global media &amp; press</p>
+          <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-8 md:gap-x-[60px]" data-stagger="90">
+            <img data-reveal="fade" src="assets/logos/client-logo1.svg" alt="Press logo 1" height="30" loading="lazy" class="client-logo"><img data-reveal="fade" src="assets/logos/client-logo2.svg" alt="Press logo 2" height="30" loading="lazy" class="client-logo"><img data-reveal="fade" src="assets/logos/client-logo3.svg" alt="Press logo 3" height="30" loading="lazy" class="client-logo"><img data-reveal="fade" src="assets/logos/client-logo4.svg" alt="Press logo 4" height="30" loading="lazy" class="client-logo"><img data-reveal="fade" src="assets/logos/client-logo5.svg" alt="Press logo 5" height="30" loading="lazy" class="client-logo">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured projects -->
+    <section id="projects" class="section-y bg-white" aria-labelledby="projects-title">
+      <div class="container-page">
+        <div class="flex flex-col gap-8 md:gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <h2 id="projects-title" class="text-h2" data-reveal data-split>Featured projects</h2>
+
+          <div class="tabs" role="tablist" aria-label="Filter projects" data-reveal data-reveal-delay="150" data-tabs>
+            <button type="button" role="tab" id="tab-all" class="tab" aria-selected="true" aria-controls="project-panel" data-filter="all">All</button>
+            <button type="button" role="tab" id="tab-ongoing" class="tab" aria-selected="false" aria-controls="project-panel" tabindex="-1" data-filter="ongoing">Ongoing</button>
+            <button type="button" role="tab" id="tab-completed" class="tab" aria-selected="false" aria-controls="project-panel" tabindex="-1" data-filter="completed">Completed</button>
+          </div>
+        </div>
+
+        <div id="project-panel" role="tabpanel" aria-labelledby="tab-all" tabindex="0" class="mt-10 md:mt-14">
+          <ul class="project-grid grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-2 md:gap-x-10 lg:gap-x-[60px] lg:gap-y-[60px]">
+            <li class="project-item" data-status="ongoing" data-reveal data-reveal-delay="0">
+              <article class="flex h-full flex-col gap-6 md:gap-8">
+                <div class="project-media" data-reveal="clip">
+                  <img src="assets/images/projects/project1.webp" alt="Glass residential tower with green terraces against a city skyline" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover">
+                </div>
+                <div class="flex flex-col gap-4 md:gap-6">
+                  <p class="flex items-center gap-3 text-body-lg"><span class="status-ring" style="--p: 68" aria-hidden="true"></span><span>68% ongoing</span></p>
+                  <h3 class="text-h3">Skyline Haven</h3>
+                  <p class="max-w-[607px] text-ink-700">A skyline-defining structure crafted for modern city dwellers — open layouts, green terraces, and panoramic glass bringing the horizon inside.</p>
+                </div>
+                <ul class="mt-auto flex flex-wrap items-center gap-x-8 gap-y-3 text-body-lg">
+                  <li class="flex items-center gap-3"><i class="icon icon-building text-ink-700"></i>Urban Apartments</li>
+                  <li class="flex items-center gap-3"><i class="icon icon-map-pin text-ink-700"></i>Melbourne, Australia</li>
+                </ul>
+              </article>
+            </li>
+            <li class="project-item" data-status="ongoing" data-reveal data-reveal-delay="120">
+              <article class="flex h-full flex-col gap-6 md:gap-8">
+                <div class="project-media" data-reveal="clip">
+                  <img src="assets/images/projects/project2.webp" alt="Seaside villas with private decks facing the Atlantic" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover">
+                </div>
+                <div class="flex flex-col gap-4 md:gap-6">
+                  <p class="flex items-center gap-3 text-body-lg"><span class="status-ring" style="--p: 42" aria-hidden="true"></span><span>42% ongoing</span></p>
+                  <h3 class="text-h3">Coastline Residences</h3>
+                  <p class="max-w-[607px] text-ink-700">Set along the Atlantic edge, this project merges elegance with serenity — private decks, sea-view lounges, and natural textures throughout.</p>
+                </div>
+                <ul class="mt-auto flex flex-wrap items-center gap-x-8 gap-y-3 text-body-lg">
+                  <li class="flex items-center gap-3"><i class="icon icon-building text-ink-700"></i>Luxury Seaside Villas</li>
+                  <li class="flex items-center gap-3"><i class="icon icon-map-pin text-ink-700"></i>Cape Town, South Africa</li>
+                </ul>
+              </article>
+            </li>
+            <li class="project-item" data-status="completed" data-reveal data-reveal-delay="0">
+              <article class="flex h-full flex-col gap-6 md:gap-8">
+                <div class="project-media" data-reveal="clip">
+                  <img src="assets/images/projects/project3.webp" alt="Mixed-use glass high-rise in an urban setting" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover">
+                </div>
+                <div class="flex flex-col gap-4 md:gap-6">
+                  <p class="flex items-center gap-3 text-body-lg"><span class="status-ring status-ring--done" aria-hidden="true"><i class="icon icon-check-circle"></i></span><span>Ready to move in</span></p>
+                  <h3 class="text-h3">The Atria Tower</h3>
+                  <p class="max-w-[607px] text-ink-700">An urban statement of glass and geometry — combining luxury apartments, coworking spaces, and curated retail experiences.</p>
+                </div>
+                <ul class="mt-auto flex flex-wrap items-center gap-x-8 gap-y-3 text-body-lg">
+                  <li class="flex items-center gap-3"><i class="icon icon-building text-ink-700"></i>Mixed-Use High-Rise</li>
+                  <li class="flex items-center gap-3"><i class="icon icon-map-pin text-ink-700"></i>Toronto, Canada</li>
+                </ul>
+              </article>
+            </li>
+            <li class="project-item" data-status="completed" data-reveal data-reveal-delay="120">
+              <article class="flex h-full flex-col gap-6 md:gap-8">
+                <div class="project-media" data-reveal="clip">
+                  <img src="assets/images/projects/project4.webp" alt="Eco-living housing complex surrounded by greenery" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover">
+                </div>
+                <div class="flex flex-col gap-4 md:gap-6">
+                  <p class="flex items-center gap-3 text-body-lg"><span class="status-ring status-ring--done" aria-hidden="true"><i class="icon icon-check-circle"></i></span><span>Ready to move in</span></p>
+                  <h3 class="text-h3">Verdant Grove</h3>
+                  <p class="max-w-[607px] text-ink-700">A nature-inspired housing complex emphasizing green spaces, rainwater systems, and natural ventilation across all homes.</p>
+                </div>
+                <ul class="mt-auto flex flex-wrap items-center gap-x-8 gap-y-3 text-body-lg">
+                  <li class="flex items-center gap-3"><i class="icon icon-building text-ink-700"></i>Eco-Living Residences</li>
+                  <li class="flex items-center gap-3"><i class="icon icon-map-pin text-ink-700"></i>Auckland, New Zealand</li>
+                </ul>
+              </article>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- @main -->
   </main>
 
@@ -134,6 +230,7 @@
   <script src="js/reveal.js" defer></script>
   <script src="js/nav.js" defer></script>
   <script src="js/parallax.js" defer></script>
+  <script src="js/tabs.js" defer></script>
   <!-- @scripts -->
 </body>
 </html>
