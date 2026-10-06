@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from projects import PROJECTS  # noqa: E402
+import legal  # noqa: E402
 
 INDEX = ROOT / "index.html"
 SITE_NAME = "Highr"
@@ -323,6 +324,72 @@ def project_page(p, parts, others):
 '''
 
 
+def legal_page(page, parts):
+    header, footer, actionbar, tailwind = parts
+    body = ""
+    for heading, blocks in page["sections"]:
+        body += f'      <section class="flex flex-col gap-4" data-reveal>\n        <h2 class="text-h4">{heading}</h2>\n'
+        for b in blocks:
+            if isinstance(b, tuple):
+                items = "".join(f"          <li>{escape(i)}</li>\n" for i in b[1])
+                body += f'        <ul class="flex list-disc flex-col gap-2 pl-6 text-ink-700">\n{items}        </ul>\n'
+            else:
+                body += f'        <p class="text-ink-700">{escape(b)}</p>\n'
+        body += "      </section>\n"
+    title = f'{page["title"]} | {SITE_NAME}'
+    return f'''<!DOCTYPE html>
+<html lang="en-US" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{escape(title)}</title>
+  <meta name="description" content="{escape(page["description"])}">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/poppins-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+
+  {tailwind}
+</head>
+
+<body class="bg-white font-sans text-base font-medium text-ink antialiased">
+  <script>document.documentElement.classList.add('js');</script>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  {header}
+
+  <main id="main">
+    <section id="top" class="hero bg-white" aria-labelledby="legal-title">
+      <div class="container-page">
+        <div class="flex max-w-[760px] flex-col items-start gap-6">
+          <h1 id="legal-title" class="text-h1" data-reveal data-split>{page["title"]}</h1>
+          <p class="text-sm text-ink-700" data-reveal data-reveal-delay="200">Last updated {legal.UPDATED}</p>
+          <p class="text-lead text-ink-700" data-reveal data-reveal-delay="300">{escape(page["intro"])}</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="container-page section-y">
+      <div class="flex max-w-[760px] flex-col gap-10">
+{body}      </div>
+    </div>
+  </main>
+
+  {footer}
+
+  {actionbar}
+
+  <script src="js/reveal.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/form.js" defer></script>
+  <script src="js/actionbar.js" defer></script>
+</body>
+</html>
+'''
+
+
 def main():
     src = INDEX.read_text(encoding="utf-8")
     new = patch_index(src)
@@ -332,7 +399,9 @@ def main():
     for p in PROJECTS:
         others = [o for o in PROJECTS if o is not p][:3]
         (ROOT / f'{p["slug"]}.html').write_text(project_page(p, parts, others), encoding="utf-8")
-    print(f"index.html cards + {len(PROJECTS)} community pages written")
+    for page in legal.PAGES:
+        (ROOT / f'{page["slug"]}.html').write_text(legal_page(page, parts), encoding="utf-8")
+    print(f"index.html cards + {len(PROJECTS)} community pages + {len(legal.PAGES)} legal pages written")
 
 
 if __name__ == "__main__":
