@@ -101,26 +101,26 @@ def card(p, i):
     ongoing = p["status"] == "ongoing"
     if ongoing:
         status = (f'<span class="status-ring" style="--p: {p["progress"]}" aria-hidden="true"></span>'
-                  f'<span>{p["progress"]}% built · Completes {p["eta"]}</span>')
+                  f'<span>{p["progress"]}% built · {p["eta"]}</span>')
     else:
         status = ('<span class="status-ring status-ring--done" aria-hidden="true"><i class="icon icon-check-circle"></i></span>'
                   '<span>Ready to move in</span>')
     delay = 0 if i % 2 == 0 else 120
     return f'''            <li class="project-item" data-status="{p["status"]}" data-reveal data-reveal-delay="{delay}">
-              <article class="flex h-full flex-col gap-6 md:gap-8">
+              <article class="flex h-full flex-col gap-6">
                 <div class="project-media" data-reveal="clip">
                   <img src="assets/images/projects/{p["image"]}" alt="{escape(p["alt"])}" width="1500" height="1002" loading="lazy" class="h-full w-full object-cover">
+                  <p class="status-badge">{status}</p>
                 </div>
-                <div class="flex flex-col gap-4 md:gap-6">
-                  <p class="flex items-center gap-3 text-body-lg">{status}</p>
+                <div class="flex flex-col gap-3">
+                  <ul class="card-meta">
+                    <li>{icon("map-pin")}{p["city"]}</li>
+                    <li>{icon("building")}{p["type"]}</li>
+                  </ul>
                   <h3 class="text-h3"><a href="{p["slug"]}" class="card-link">{p["name"]}</a></h3>
                   <p class="max-w-[607px] text-ink-700">{p["card"]}</p>
                 </div>
-                <ul class="mt-auto flex flex-wrap items-center gap-x-8 gap-y-3 text-body-lg">
-                  <li class="flex items-center gap-3"><i class="icon icon-building text-ink-700"></i>{p["type"]}</li>
-                  <li class="flex items-center gap-3"><i class="icon icon-map-pin text-ink-700"></i>{p["city"]}</li>
-                </ul>
-                <dl class="spec">
+                <dl class="spec mt-auto">
                   <div class="spec__item"><dt>{icon("price-tag")}From</dt><dd>{p["price"]}</dd></div>
                   <div class="spec__item"><dt>{icon("bed")}Bedrooms</dt><dd>{beds_label(p["beds"])}</dd></div>
                   <div class="spec__item"><dt>{icon("ruler")}Area</dt><dd>{p["size"]}</dd></div>
