@@ -5,7 +5,7 @@ plus a compiled Tailwind stylesheet. It needs a static server that maps `/page` 
 Node is needed only to rebuild the Tailwind CSS.
 
 **Demo site.** Highr is a fictional company. Live at https://forhadkhan.github.io/highr/ (GitHub Pages,
-branch `main`, root). Every page carries `noindex` (set `DEMO = False` in `tools/build-pages.py` to remove it)
+branch `main`, root). Every page carries `noindex` and `robots.txt` disallows all crawling (set `DEMO = False` in `tools/build-pages.py` to remove both)
 and the footer says so.
 
 ## Run

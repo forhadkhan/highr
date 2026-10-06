@@ -110,6 +110,8 @@ def sitemap():
 
 
 def robots():
+    if DEMO:
+        return "User-agent: *\nDisallow: /\n"  # demo: keep out of search engines (pages also carry noindex)
     return f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n"
 
 
