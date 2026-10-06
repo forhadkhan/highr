@@ -242,23 +242,26 @@
     will-change: auto;
   }
 
-  /* Image wipe: wrapper unveils while the image settles from a zoom */
-  .js [data-reveal='clip'] {
-    opacity: 1;
-    transform: none;
-    clip-path: inset(0 0 100% 0);
-    transition: clip-path 1.3s var(--ease-in-out);
-    transition-delay: var(--reveal-delay, 0ms);
+  /* Image wipe: wrapper unveils while the image settles from a zoom. Only on screens with a
+     mouse: on phones the box (and the photo placeholder in it) is always visible, so a photo
+     can never stay hidden if the scroll observer is slow or never fires. */
+  .js [data-reveal='clip'] { opacity: 1; transform: none; }
+  @media (min-width: 768px) and (hover: hover) {
+    .js [data-reveal='clip'] {
+      clip-path: inset(0 0 100% 0);
+      transition: clip-path 1.3s var(--ease-in-out);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+    .js [data-reveal='clip'] > img,
+    .js [data-reveal='clip'] > picture img {
+      transform: scale(1.25);
+      transition: transform 1.6s var(--ease-out);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+    .js [data-reveal='clip'].is-visible { clip-path: inset(0 0 0 0); }
+    .js [data-reveal='clip'].is-visible > img,
+    .js [data-reveal='clip'].is-visible > picture img { transform: scale(1); }
   }
-  .js [data-reveal='clip'] > img,
-  .js [data-reveal='clip'] > picture img {
-    transform: scale(1.25);
-    transition: transform 1.6s var(--ease-out);
-    transition-delay: var(--reveal-delay, 0ms);
-  }
-  .js [data-reveal='clip'].is-visible { clip-path: inset(0 0 0 0); }
-  .js [data-reveal='clip'].is-visible > img,
-  .js [data-reveal='clip'].is-visible > picture img { transform: scale(1); }
 
   /* Word-by-word headline reveal (words are wrapped by js/reveal.js) */
   .split-word {

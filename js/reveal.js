@@ -77,15 +77,23 @@
     applyDelays();
     applyStagger();
 
+    // A clip-path wipe hides its own box, which some browsers count as "not visible", so
+    // those are watched through their parent and the wipe is started from there.
+    var watched = new Map();
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
+        var el = watched.get(entry.target);
+        el.classList.add('is-visible');
         observer.unobserve(entry.target);
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
 
-    targets.forEach(function (el) { observer.observe(el); });
+    targets.forEach(function (el) {
+      var node = el.getAttribute('data-reveal') === 'clip' ? el.parentElement : el;
+      watched.set(node, el);
+      observer.observe(node);
+    });
   }
 
   if (document.readyState === 'loading') {
